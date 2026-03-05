@@ -1198,13 +1198,15 @@
                 el('race-area').innerHTML = h;
 
                const now = new Date().getTime();
+               const now = new Date().getTime();
                 if (END_TIME && now >= END_TIME) {
-                    if (POLL) clearTimeout(POLL); // MATIKAN REFRESH OTOMATIS AGAR HEMAT KUOTA FIREBASE
-                    if (!isFinalizing && !window.shownResult) {
-                        el('live-final').style.display = 'flex'; isFinalizing = true;
-                        setTimeout(() => { el('live-final').style.display = 'none'; isFinalizing = false; showWinnerModal({c:cands}); }, 500);
+                    if (POLL) clearTimeout(POLL); // Matikan refresh lambat 20 detik
+                    if (!window.shownResult) {
+                        el('live-final').style.display = 'none'; // Matikan layar hitam
+                        showWinnerModal({c:cands}); // Langsung munculkan piala tanpa nunggu!
                     }
                 }
+
             } else { el('race-area').innerHTML = '<div class="text-center text-white py-5">Belum ada data kandidat.</div>'; }
             updateTimer();
         } catch (err) { console.log('Tick Error:', err); }
@@ -1257,12 +1259,26 @@
         } catch (e) { }
     }
 
-    function updateTimer() {
+   function updateTimer() {
         if(!START_TIME) return; const now = new Date().getTime(); const tm = el('timer-live'); if(!tm) return;
-        if(now < START_TIME) { el('live-wait').classList.remove('d-none'); el('race-area').classList.add('d-none'); tm.classList.add('text-danger'); tm.innerText = formatTime(START_TIME - now); if(el('timer-live-wait')) el('timer-live-wait').innerText = formatTime(START_TIME - now); } 
-        else if (END_TIME && now < END_TIME) { el('live-wait').classList.add('d-none'); el('race-area').classList.remove('d-none'); tm.classList.remove('text-danger'); tm.classList.add('text-success'); tm.innerText = formatTime(END_TIME - now); } 
-        else if (END_TIME && now >= END_TIME) { tm.innerText = "WAKTU HABIS"; tm.classList.add('text-danger'); if(!isEnded) { isEnded = true; isFinalizing = true; el('live-final').style.display = 'flex'; setTimeout(() => { isFinalizing = false; tick(); }, 500); } } 
-        else { tm.innerText = "BERLANGSUNG"; if(!isStarted) { isStarted=true; tick(); } }
+        if(now < START_TIME) { 
+            el('live-wait').classList.remove('d-none'); el('race-area').classList.add('d-none'); tm.classList.add('text-danger'); tm.innerText = formatTime(START_TIME - now); if(el('timer-live-wait')) el('timer-live-wait').innerText = formatTime(START_TIME - now); 
+        } 
+        else if (END_TIME && now < END_TIME) { 
+            el('live-wait').classList.add('d-none'); el('race-area').classList.remove('d-none'); tm.classList.remove('text-danger'); tm.classList.add('text-success'); tm.innerText = formatTime(END_TIME - now); 
+        } 
+        else if (END_TIME && now >= END_TIME) { 
+            tm.innerText = "WAKTU HABIS"; tm.classList.add('text-danger'); 
+            // SAAT WAKTU HABIS: Langsung munculkan layar hitam dan PAKSA hitung suara detik itu juga!
+            if(!isEnded) { 
+                isEnded = true; 
+                el('live-final').style.display = 'flex'; 
+                tick(); 
+            } 
+        } 
+        else { 
+            tm.innerText = "BERLANGSUNG"; if(!isStarted) { isStarted=true; tick(); } 
+        }
     }
 
     function showWinnerModal(d) {
