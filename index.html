@@ -485,7 +485,8 @@
               <div class="modal-body">
                   <button class="btn btn-sm btn-outline-success w-100 mb-3" onclick="dlTemp()"><i class="bi bi-download"></i> Download Template CSV</button>
                   <p class="small text-muted">Format: Username,Password,Nama,NIA</p>
-                  <textarea id="csvIn" class="form-control mb-2 font-monospace small" rows="8"></textarea>
+                  <input type="file" id="csvFileInput" class="form-control mb-2" accept=".csv" onchange="readCSVFile(this)">
+<textarea id="csvIn" class="form-control mb-2 font-monospace small" rows="4" placeholder="Atau paste isi CSV di sini..."></textarea>
                   <button class="btn btn-success w-100" onclick="runImport()">Proses Import</button>
               </div>
           </div>
@@ -1357,16 +1358,21 @@
     // --- FITUR CETAK PDF ---
     async function execPdf(htmlContent, filename) {
         load(1);
-        const container = el('pdf-container');
-        container.innerHTML = htmlContent;
-        container.style.display = 'block';
+        
+        // Buat elemen sementara di memori (agar tidak terbaca "kosong" oleh pembuat PDF)
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = htmlContent;
         
         const opt = { 
-            margin: 0.5, filename: filename, image: { type: 'jpeg', quality: 0.98 }, 
-            html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' } 
+            margin: 0.5, 
+            filename: filename, 
+            image: { type: 'jpeg', quality: 0.98 }, 
+            // useCORS: true sangat wajib agar foto kandidat/logo dari internet bisa masuk PDF!
+            html2canvas: { scale: 2, useCORS: true }, 
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' } 
         };
-        await html2pdf().set(opt).from(container).save();
-        container.style.display = 'none';
+        
+        await html2pdf().set(opt).from(tempDiv).save();
         load(0);
     }
 
@@ -1449,6 +1455,17 @@
         html += `</div>`;
         execPdf(html, 'Data_Kandidat.pdf');
     }
+
+    function readCSVFile(input) {
+    const file = input.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            el('csvIn').value = e.target.result;
+        };
+        reader.readAsText(file);
+    }
+}
   </script>
 </body>
 </html>
