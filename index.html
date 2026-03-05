@@ -1197,10 +1197,13 @@
                 });
                 el('race-area').innerHTML = h;
 
-                const now = new Date().getTime();
-                if (END_TIME && now >= END_TIME && !isFinalizing && !window.shownResult) {
-                    el('live-final').style.display = 'flex'; isFinalizing = true;
-                    setTimeout(() => { el('live-final').style.display = 'none'; isFinalizing = false; showWinnerModal({c:cands}); }, 4000);
+               const now = new Date().getTime();
+                if (END_TIME && now >= END_TIME) {
+                    if (POLL) clearTimeout(POLL); // MATIKAN REFRESH OTOMATIS AGAR HEMAT KUOTA FIREBASE
+                    if (!isFinalizing && !window.shownResult) {
+                        el('live-final').style.display = 'flex'; isFinalizing = true;
+                        setTimeout(() => { el('live-final').style.display = 'none'; isFinalizing = false; showWinnerModal({c:cands}); }, 500);
+                    }
                 }
             } else { el('race-area').innerHTML = '<div class="text-center text-white py-5">Belum ada data kandidat.</div>'; }
             updateTimer();
@@ -1258,13 +1261,21 @@
         if(!START_TIME) return; const now = new Date().getTime(); const tm = el('timer-live'); if(!tm) return;
         if(now < START_TIME) { el('live-wait').classList.remove('d-none'); el('race-area').classList.add('d-none'); tm.classList.add('text-danger'); tm.innerText = formatTime(START_TIME - now); if(el('timer-live-wait')) el('timer-live-wait').innerText = formatTime(START_TIME - now); } 
         else if (END_TIME && now < END_TIME) { el('live-wait').classList.add('d-none'); el('race-area').classList.remove('d-none'); tm.classList.remove('text-danger'); tm.classList.add('text-success'); tm.innerText = formatTime(END_TIME - now); } 
-        else if (END_TIME && now >= END_TIME) { tm.innerText = "WAKTU HABIS"; tm.classList.add('text-danger'); if(!isEnded) { isEnded = true; isFinalizing = true; el('live-final').style.display = 'flex'; setTimeout(() => { isFinalizing = false; tick(); }, 4000); } } 
+        else if (END_TIME && now >= END_TIME) { tm.innerText = "WAKTU HABIS"; tm.classList.add('text-danger'); if(!isEnded) { isEnded = true; isFinalizing = true; el('live-final').style.display = 'flex'; setTimeout(() => { isFinalizing = false; tick(); }, 500); } } 
         else { tm.innerText = "BERLANGSUNG"; if(!isStarted) { isStarted=true; tick(); } }
     }
 
     function showWinnerModal(d) {
-        if (window.shownResult) return; const topScore = d.c[0].suara || 0; if (topScore <= 0) return;
-        const winners = d.c.filter(x => x.suara === topScore); window.shownResult = true;
+        if (window.shownResult) return; 
+        window.shownResult = true; // TANDAI SUDAH TAMPIL AGAR TIDAK NGULANG
+        
+        const topScore = d.c[0].suara || 0; 
+        if (topScore <= 0) {
+            Swal.fire('Hasil Seri / Kosong', 'Waktu habis, tapi belum ada suara yang masuk.', 'info');
+            return;
+        }
+        
+        const winners = d.c.filter(x => x.suara === topScore);
         if (winners.length > 1) {
             let drawListHTML = ''; 
             winners.forEach(w => { 
