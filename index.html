@@ -1141,17 +1141,30 @@
     function initCrop(i,t){ if(i.files[0]){ TGT=t; const r=new FileReader(); r.onload=e=>{ el('img-crop').src = e.target.result; new bootstrap.Modal('#mCrop').show(); if(CROP){ CROP.destroy(); CROP=null; } setTimeout(()=>{ CROP=new Cropper(el('img-crop'),{aspectRatio:t=='logo'?1:0.75,viewMode:1,autoCropArea:1}); },300); }; r.readAsDataURL(i.files[0]); } }
     function doCrop(){ if(!CROP) return; const w=TGT=='logo'?150:300, h=TGT=='logo'?150:400; let b64; if(TGT=='logo') b64=CROP.getCroppedCanvas({width:w,height:h}).toDataURL('image/png'); else b64=CROP.getCroppedCanvas({width:w,height:h,fillColor:'#fff'}).toDataURL('image/jpeg',0.6); if(TGT=='logo'){ el('logoNew').value=b64; el('logoPrev').src=b64; el('logoPrev').style.display='block'; el('logoTxt').style.display='none'; } else if(TGT=='p'){ el('p-b64').value=b64; el('p-img').src=b64; el('p-img').style.display='block'; el('p-txt').style.display='none'; } else if(TGT=='c'){ el('cfn').value=b64; el('cpr').src=b64; el('cpr').style.display='block'; el('cpt').style.display='none'; } else if(TGT=='v'){ el('vfn').value=b64; el('vpr').src=b64; el('vpr').style.display='block'; el('vpt').style.display='none'; } bootstrap.Modal.getInstance(el('mCrop')).hide(); }
 
+    
     // --- FITUR CETAK PDF ---
     async function execPdf(htmlContent, filename) {
         load(1);
-        const container = el('pdf-container');
-        container.innerHTML = htmlContent;
-        container.style.display = 'block';
-        const opt = { margin: 0.5, filename: filename, image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' } };
-        await html2pdf().set(opt).from(container).save();
-        container.style.display = 'none';
+        
+        // Buat elemen bayangan di memori, BUKAN elemen yang disembunyikan di HTML
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = htmlContent;
+        
+        const opt = { 
+            margin: 0.5, 
+            filename: filename, 
+            image: { type: 'jpeg', quality: 0.98 }, 
+            // useCORS: true INI NYAWANYA! Biar foto dari link luar bisa masuk ke PDF
+            html2canvas: { scale: 2, useCORS: true, logging: false }, 
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' } 
+        };
+        
+        // Hasilkan PDF langsung dari elemen bayangan
+        await html2pdf().set(opt).from(tempDiv).save();
+        
         load(0);
     }
+
     function dlCard(username) {
         const u = ALL_VOTERS.find(x => x.user === username) || ME.data;
         if(!u) return Swal.fire('Error', 'Data pemilih tidak ditemukan', 'error');
