@@ -1026,21 +1026,25 @@
 
             
                 // LOGIKA BARU FINALISASI TANPA DELAY!
+                // LOGIKA BARU FINALISASI TANPA DELAY!
                 const now = new Date().getTime();
                 if (END_TIME && now >= END_TIME) {
-                    if (POLL) { clearTimeout(POLL); clearInterval(POLL); } // Matikan semua polling
+                    if (POLL) { clearTimeout(POLL); clearInterval(POLL); } 
+                    el('live-final').style.display = 'none'; // WAJIB DIMATIKAN APAPUN YANG TERJADI!
                     if (!window.shownResult) {
-                        el('live-final').style.display = 'none'; // Matikan layar hitam secara instan
-                        showWinnerModal({c: cands}); // Langsung munculkan piala tanpa nunggu!
+                        showWinnerModal({c: cands}); 
                     }
                 }
+                 
             } else { 
                 el('race-area').innerHTML = '<div class="text-center text-white py-5">Belum ada data kandidat.</div>'; 
                 // Proteksi jika data kosong saat waktu habis
+                // Proteksi jika data kosong saat waktu habis
                 const now = new Date().getTime();
                 if (END_TIME && now >= END_TIME) {
-                    if (POLL) clearTimeout(POLL);
-                    if (!window.shownResult) { el('live-final').style.display = 'none'; showWinnerModal({c: []}); }
+                    if (POLL) { clearTimeout(POLL); clearInterval(POLL); }
+                    el('live-final').style.display = 'none'; // WAJIB DIMATIKAN
+                    if (!window.shownResult) { showWinnerModal({c: []}); }
                 }
             }
             updateTimer();
@@ -1176,8 +1180,23 @@
         const c = GLOBAL_CONFIG; const s = c.stats || {}; const cands = GLOBAL_CANDS || [];
         let dateStr = new Date().toLocaleString('id-ID');
         let html = `<div style="font-family:sans-serif; padding:20px;"><div style="text-align:center; border-bottom:2px solid #000; padding-bottom:10px; margin-bottom:20px;">${c.Logo ? `<img src="${c.Logo}" style="width:80px;height:80px;object-fit:contain;"><br>` : ''}<h3 style="margin:2px 0;">${c.OrgFullName||'ORGANISASI'}</h3><h2 style="margin:2px 0;">${c.OrgName||''}</h2></div><h3 style="text-align:center;">${c.Judul||'LAPORAN HASIL PEMILIHAN'}</h3><div style="margin-bottom:20px; font-size:12px;"><b>Waktu Cetak:</b> ${dateStr}<br><b>Total DPT:</b> ${s.tot||0} Pemilih</div><h4>A. PEROLEHAN SUARA KANDIDAT</h4><table style="width:100%; border-collapse:collapse; margin-top:10px; font-size:12px;"><thead><tr><th style="border:1px solid #000; padding:6px; background:#f0f0f0;">No</th><th style="border:1px solid #000; padding:6px; background:#f0f0f0;">Nama Kandidat</th><th style="border:1px solid #000; padding:6px; background:#f0f0f0;">Jumlah Suara</th><th style="border:1px solid #000; padding:6px; background:#f0f0f0;">Persentase</th></tr></thead><tbody>`;
-        cands.forEach(cand => { let pct = s.vot > 0 ? ((cand.suara/s.vot)*100).toFixed(2) : 0; html += `<tr><td style="border:1px solid #000; padding:6px; text-align:center;">${cand.no}</td><td style="border:1px solid #000; padding:6px;">${cand.nama}</td><td style="border:1px solid #000; padding:6px; text-align:center;"><b>${cand.suara||0}</b></td><td style="border:1px solid #000; padding:6px; text-align:center;">${pct}%</td></tr>`; });
-        html += `</tbody></table><h4 style="margin-top:30px;">B. REKAPITULASI SUARA</h4><table style="width:60%; border-collapse:collapse; font-size:12px;"><tr><td style="border:1px solid #000; padding:6px;">Total Suara Sah</td><td style="border:1px solid #000; padding:6px; text-align:center;">${s.valid||0}</td></tr><tr><td style="border:1px solid #000; padding:6px;">Total Abstain</td><td style="border:1px solid #000; padding:6px; text-align:center;">${s.abstain||0}</td></tr><tr style="background:#eee;"><td style="border:1px solid #000; padding:6px;"><b>TOTAL SUARA MASUK</b></td><td style="border:1px solid #000; padding:6px; text-align:center;"><b>${s.vot||0}</b></td></tr><tr><td style="border:1px solid #000; padding:6px;">Belum Memilih</td><td style="border:1px solid #000; padding:6px; text-align:center;">${s.belum||0}</td></tr></table></div>`;
+        
+        cands.forEach(cand => { 
+            let pct = s.vot > 0 ? ((cand.suara/s.vot)*100).toFixed(2) : 0; 
+            html += `<tr><td style="border:1px solid #000; padding:6px; text-align:center;">${cand.no}</td><td style="border:1px solid #000; padding:6px;">${cand.nama}</td><td style="border:1px solid #000; padding:6px; text-align:center;"><b>${cand.suara||0}</b></td><td style="border:1px solid #000; padding:6px; text-align:center;">${pct}%</td></tr>`; 
+        });
+        
+        // Perbaikan Tabel Bawah: Lebar 100% dan Anti Terpotong Halaman
+        html += `</tbody></table>
+        <div style="page-break-inside: avoid; margin-top:30px;">
+            <h4>B. REKAPITULASI SUARA</h4>
+            <table style="width:100%; border-collapse:collapse; font-size:12px;">
+                <tr><td style="border:1px solid #000; padding:6px; width:75%;">Total Suara Sah</td><td style="border:1px solid #000; padding:6px; text-align:center;">${s.valid||0}</td></tr>
+                <tr><td style="border:1px solid #000; padding:6px;">Total Abstain</td><td style="border:1px solid #000; padding:6px; text-align:center;">${s.abstain||0}</td></tr>
+                <tr style="background:#eee;"><td style="border:1px solid #000; padding:6px;"><b>TOTAL SUARA MASUK</b></td><td style="border:1px solid #000; padding:6px; text-align:center;"><b>${s.vot||0}</b></td></tr>
+                <tr><td style="border:1px solid #000; padding:6px;">Belum Memilih</td><td style="border:1px solid #000; padding:6px; text-align:center;">${s.belum||0}</td></tr>
+            </table>
+        </div></div>`;
         execPdf(html, 'Laporan_Resmi.pdf');
     }
     function dlCandPdf() {
