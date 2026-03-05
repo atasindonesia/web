@@ -365,7 +365,7 @@
               <h2 class="fw-bold text-dark" id="win-name">Nama</h2>
               <p class="lead text-muted">Memperoleh suara terbanyak!</p>
               <div class="display-3 fw-bold text-primary" id="win-score">0</div>
-              <button type="button" class="btn btn-secondary mt-4 px-5 fw-bold" onclick="window.location.reload()">TUTUP & REFRESH</button>
+              <button type="button" class="btn btn-secondary mt-4 px-5 fw-bold" data-bs-dismiss="modal">TUTUP</button>
           </div>
       </div>
   </div>
@@ -378,7 +378,7 @@
               <p class="text-muted">Perolehan suara tertinggi sama kuat:</p>
               <div id="draw-list" class="my-4"></div>
               <h3 class="fw-bold text-dark">Total Suara: <span id="draw-score">0</span></h3>
-              <button type="button" class="btn btn-secondary mt-4 px-5 fw-bold" onclick="window.location.reload()">TUTUP & REFRESH</button>
+              <button type="button" class="btn btn-secondary mt-4 px-5 fw-bold" data-bs-dismiss="modal">TUTUP</button>
           </div>
       </div>
   </div>
@@ -1024,10 +1024,11 @@
                 });
                 el('race-area').innerHTML = h;
 
+            
                 // LOGIKA BARU FINALISASI TANPA DELAY!
                 const now = new Date().getTime();
                 if (END_TIME && now >= END_TIME) {
-                    if (POLL) clearTimeout(POLL); // Matikan polling lambat
+                    if (POLL) { clearTimeout(POLL); clearInterval(POLL); } // Matikan semua polling
                     if (!window.shownResult) {
                         el('live-final').style.display = 'none'; // Matikan layar hitam secara instan
                         showWinnerModal({c: cands}); // Langsung munculkan piala tanpa nunggu!
@@ -1054,15 +1055,27 @@
             el('live-wait').classList.remove('d-none'); el('race-area').classList.add('d-none'); tm.classList.add('text-danger'); tm.innerText = formatTime(START_TIME - now); if(el('timer-live-wait')) el('timer-live-wait').innerText = formatTime(START_TIME - now); 
         } 
         else if (END_TIME && now < END_TIME) { 
-            el('live-wait').classList.add('d-none'); el('race-area').classList.remove('d-none'); tm.classList.remove('text-danger'); tm.classList.add('text-success'); tm.innerText = formatTime(END_TIME - now); 
+            el('live-wait').classList.add('d-none'); el('race-area').classList.remove('d-none'); tm.classList.remove('text-danger'); tm.classList.add('text-success'); 
+            
+            let timeLeft = END_TIME - now;
+            tm.innerText = formatTime(timeLeft); 
+            
+            // --- TURBO MODE 20 DETIK TERAKHIR ---
+            if (timeLeft <= 20000 && !window.fastPollActive) {
+                window.fastPollActive = true;
+                if(POLL) clearTimeout(POLL); // Matikan sistem refresh lambat
+                console.log("TURBO MODE AKTIF: Sedot data tiap 2 detik!");
+                tick(); // Sedot instan sekarang
+                POLL = setInterval(() => { tick(); }, 2000); // Gas pol tiap 2 detik
+            }
         } 
         else if (END_TIME && now >= END_TIME) { 
             tm.innerText = "WAKTU HABIS"; tm.classList.add('text-danger'); 
-            // SAAT WAKTU HABIS: Langsung panggil hitungan final!
             if(!isEnded) { 
                 isEnded = true; 
+                if(POLL) { clearTimeout(POLL); clearInterval(POLL); } // Rem mendadak, matikan semua tarikan data
                 el('live-final').style.display = 'flex'; 
-                tick(); // Sedot data final saat ini juga
+                tick(); // Pukulan penutup! Tarik data detik terakhir.
             } 
         } 
         else { 
@@ -1100,9 +1113,23 @@
     window.onscroll = () => { const btn = el('btn-scroll-top'); if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) btn.style.display = "flex"; else btn.style.display = "none"; };
     
     function nav(id) {
-      document.querySelectorAll('.view-section').forEach(x=>x.classList.remove('view-active')); el('v-'+id).classList.add('view-active');
-      if(POLL) clearTimeout(POLL);
-      if(id=='live') { isEnded = false; isStarted = false; isFinalizing = false; tick(); const loopTick = () => { const t=Math.floor(Math.random()*5000)+20000; POLL=setTimeout(()=>{tick();loopTick();},t); }; loopTick(); setInterval(updateTimer, 1000); }
+      document.querySelectorAll('.view-section').forEach(x=>x.classList.remove('view-active')); 
+      el('v-'+id).classList.add('view-active');
+      
+      if(POLL) { clearTimeout(POLL); clearInterval(POLL); }
+      
+      if(id=='live') { 
+          isEnded = false; isStarted = false; isFinalizing = false; 
+          window.fastPollActive = false; window.shownResult = false;
+          tick(); 
+          const loopTick = () => { 
+              const t = Math.floor(Math.random()*5000)+20000; 
+              POLL = setTimeout(()=>{ tick(); loopTick(); }, t); 
+          }; 
+          loopTick(); 
+          if(window.TIMER_INT) clearInterval(window.TIMER_INT);
+          window.TIMER_INT = setInterval(updateTimer, 1000); 
+      }
     }
 
     // MODAL, WILAYAH, CROPPER
