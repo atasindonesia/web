@@ -12,14 +12,8 @@
 <style>
   /* --- GLOBAL CSS --- */
   html, body { 
-      background: #f1f5f9; 
-      font-family: 'Segoe UI', sans-serif; 
-      font-size: 14px; 
-      overflow-x: hidden; 
-      width: 100%; 
-      min-height: 100vh; 
-      margin: 0; 
-      padding: 0; 
+      background: #f1f5f9; font-family: 'Segoe UI', sans-serif; font-size: 14px; 
+      overflow-x: hidden; width: 100%; min-height: 100vh; margin: 0; padding: 0; 
   }
   img { max-width: 100%; height: auto; }
   
@@ -33,87 +27,96 @@
   }
   .content { margin-left: 260px; padding: 20px; transition: margin-left 0.3s; width: auto; }
   
-  .sidebar-overlay { 
-      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); 
-      z-index: 1040; backdrop-filter: blur(2px); 
-  }
+  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1040; backdrop-filter: blur(2px); }
   .sidebar-overlay.show { display: block !important; }
 
-  @media(max-width:768px){ 
-      .sidebar{ transform:translateX(-100%); } 
-      .sidebar.show{ transform:translateX(0); } 
-      .content{ margin-left:0; width: 100%; padding: 15px; } 
-  }
-  
-  @media(max-width:480px){ 
-      .race-card { flex-direction: column !important; text-align: center; } 
-      .cand-thumb { width: 80px; height: 80px; margin-bottom: 10px; } 
-      .rank-1 { transform: scale(1) !important; } 
-  }
-  
-  .nav-item { 
-      padding: 12px; border-radius: 8px; cursor: pointer; color: #94a3b8; 
-      display: flex; gap: 10px; align-items: center; margin-bottom: 5px; transition:0.2s; 
-  }
+  .nav-item { padding: 12px; border-radius: 8px; cursor: pointer; color: #94a3b8; display: flex; gap: 10px; align-items: center; margin-bottom: 5px; transition:0.2s; }
   .nav-item:hover, .nav-item.active { background: rgba(255,255,255,0.1); color: white; }
   
-  .card-box { 
-      background: white; border-radius: 12px; padding: 20px; 
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border:1px solid #e2e8f0; 
-  }
+  .card-box { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border:1px solid #e2e8f0; }
   #v-login .card-box { width: 90%; max-width: 400px; margin: auto; }
   
-  #loader { 
-      position: fixed; inset: 0; background: rgba(255,255,255,0.98); 
-      z-index: 99999; display: flex; flex-direction: column; 
-      justify-content: center; align-items: center; 
-  }
-  #error-box { 
-      display: none; margin-top: 20px; color: #dc3545; font-weight: bold; 
-      border: 1px solid #dc3545; padding: 15px; border-radius: 8px; 
-      background: #fff; text-align:center; 
-  }
+  #loader { position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+  #error-box { display: none; margin-top: 20px; color: #dc3545; font-weight: bold; border: 1px solid #dc3545; padding: 15px; border-radius: 8px; background: #fff; text-align:center; }
   
-  .live-header { 
-      background: #1e293b; padding: 20px; color: white; 
-      border-bottom: 4px solid #f59e0b; position: sticky; top:0; z-index:100; width: 100%; 
-  }
-  .race-card { 
-      background: white; padding: 15px; border-radius: 12px; display: flex; 
-      align-items: center; gap: 15px; margin-bottom: 12px; transition: 0.5s; 
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05); border:1px solid white; justify-content: space-between; 
-  }
-  .rank-1 { 
-      background: linear-gradient(to right, #fffbeb, #fff); border: 2px solid #fbbf24; 
-      transform: scale(1.02); z-index:10; box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3); 
-  }
+  .live-header { background: #1e293b; padding: 20px; color: white; border-bottom: 4px solid #f59e0b; position: sticky; top:0; z-index:100; width: 100%; }
+  .race-card { background: white; padding: 15px; border-radius: 12px; display: flex; align-items: center; gap: 15px; margin-bottom: 12px; transition: 0.5s; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border:1px solid white; justify-content: space-between; }
+  .rank-1 { background: linear-gradient(to right, #fffbeb, #fff); border: 2px solid #fbbf24; transform: scale(1.02); z-index:10; box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3); }
   .text-gold { color: #fbbf24 !important; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
   .text-silver { color: #94a3b8 !important; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
   .cand-thumb { width:60px; height:60px; border-radius:50%; object-fit:cover; border:2px solid #eee; flex-shrink:0; }
-  .img-dummy { 
-      background: #f8fafc; border: 2px dashed #cbd5e1; display: flex; 
-      align-items: center; justify-content: center; color: #94a3b8; font-weight: bold; transition:0.2s; 
-  }
+  .img-dummy { background: #f8fafc; border: 2px dashed #cbd5e1; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: bold; transition:0.2s; }
   .cand-admin-img { width: 80px; height: 100px; object-fit: cover; border-radius: 8px; background: #eee; flex-shrink: 0; }
   
-  #live-final { 
-      position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 10000; 
-      flex-direction: column; justify-content: center; align-items: center; color: white; display: none; 
-  }
-  #btn-scroll-top { 
-      position: fixed; bottom: 80px; right: 20px; z-index: 900; width: 45px; height: 45px; 
-      border-radius: 50%; background: #0d6efd; color: white; border: none; 
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4); display: none; align-items: center; 
-      justify-content: center; font-size: 20px; transition: 0.3s; 
-  }
-  .live-footer { 
-      text-align: center; color: rgba(255,255,255,0.5); font-size: 11px; bottom: 80px; 
-      margin-top: 30px; padding: 10px; border-top: 1px solid rgba(255,255,255,0.1); 
-  }
+  #live-final { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 10000; flex-direction: column; justify-content: center; align-items: center; color: white; display: none; }
+  #btn-scroll-top { position: fixed; bottom: 80px; right: 20px; z-index: 900; width: 45px; height: 45px; border-radius: 50%; background: #0d6efd; color: white; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.4); display: none; align-items: center; justify-content: center; font-size: 20px; transition: 0.3s; }
+  .live-footer { text-align: center; color: rgba(255,255,255,0.5); font-size: 11px; bottom: 80px; margin-top: 30px; padding: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
   .blink-red { animation: blinker 1.5s linear infinite; color: #dc3545; font-weight: bold; }
   @keyframes blinker { 50% { opacity: 0.5; } }
   .eye-icon { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #6c757d; z-index: 10; } 
   .modal-backdrop { z-index: 1050; } .modal { z-index: 1060; } #mCrop { z-index: 1070 !important; }
+
+  /* =========================================
+     DESAIN NATIVE MOBILE (HP)
+  ========================================= */
+  @media(max-width:768px){ 
+      .sidebar{ transform:translateX(-100%); } 
+      .sidebar.show{ transform:translateX(0); } 
+      
+      /* Hilangkan sidebar asli di HP untuk Pemilih */
+      #v-voter .sidebar { display: none !important; }
+      
+      /* Ruang ekstra agar konten tidak tertutup bar atas/bawah */
+      .content{ margin-left:0; width: 100%; padding: 15px; } 
+      #v-voter .content { padding: 80px 15px 95px 15px !important; }
+      #v-live { padding-bottom: 90px; }
+      
+      .race-card { flex-direction: column !important; text-align: center; } 
+      .cand-thumb { width: 80px; height: 80px; margin-bottom: 10px; } 
+      .rank-1 { transform: scale(1) !important; } 
+
+      /* Bar Atas HP (Pemilih) */
+      .mobile-top-bar {
+          position: fixed; top: 0; left: 0; right: 0; background: #ffffff;
+          z-index: 1040; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+          display: flex; justify-content: space-between; align-items: center;
+          padding: 12px 20px; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;
+      }
+
+      /* Menu Navigasi Bawah HP (Pemilih) */
+      .bottom-nav {
+          position: fixed; bottom: 0; left: 0; right: 0; background: #ffffff;
+          box-shadow: 0 -2px 15px rgba(0,0,0,0.08); display: flex; 
+          justify-content: space-around; align-items: center; padding: 8px 0 12px 0; 
+          z-index: 1050; border-top-left-radius: 20px; border-top-right-radius: 20px;
+      }
+      .bottom-nav .nav-item-m {
+          display: flex; flex-direction: column; align-items: center;
+          color: #94a3b8; font-size: 11px; font-weight: 600; cursor: pointer;
+      }
+      .bottom-nav .nav-item-m i { font-size: 22px; margin-bottom: 2px; }
+      .bottom-nav .nav-item-m.active { color: #0d6efd; }
+      
+      /* Tombol Tengah Besar (FAB) */
+      .nav-fab {
+          background: linear-gradient(135deg, #0d6efd, #0043a8); color: white !important; 
+          width: 60px; height: 60px; border-radius: 50%; display: flex; 
+          flex-direction: column; justify-content: center; align-items: center;
+          box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4); transform: translateY(-20px);
+          border: 5px solid #f1f5f9; cursor: pointer;
+      }
+      .nav-fab i { font-size: 26px !important; margin: 0 !important; }
+      .nav-fab span { display: none; }
+
+      /* Bar Bawah Khusus Live Count Mobile */
+      .live-bottom-nav {
+          position: fixed; bottom: 0; left: 0; right: 0; background: #1e293b;
+          box-shadow: 0 -4px 15px rgba(0,0,0,0.5); display: flex;
+          justify-content: space-between; align-items: center; padding: 15px 20px;
+          z-index: 1050; border-top-left-radius: 20px; border-top-right-radius: 20px;
+          border-top: 1px solid #334155;
+      }
+  }
 </style>
 </head>
 <body>
@@ -291,7 +294,8 @@
   </div>
 
   <div id="v-voter" class="view-section">
-    <div class="sidebar" id="sb-voter">
+    
+    <div class="sidebar d-none d-md-block" id="sb-voter">
         <div class="d-flex align-items-center gap-2 mb-5 px-2">
             <div class="bg-success rounded px-2 py-1 fw-bold">V</div> 
             <h5 class="fw-bold m-0">AREA PEMILIH</h5>
@@ -300,13 +304,48 @@
         <div class="nav-item" onclick="voterNav('profil')"><i class="bi bi-person-circle"></i> Profil Saya</div>
         <div class="nav-item text-danger mt-5" onclick="logout()"><i class="bi bi-box-arrow-left"></i> Logout</div>
     </div>
+
+    <div class="mobile-top-bar d-md-none shadow-sm">
+        <div class="d-flex align-items-center gap-2">
+            <img id="voter-logo-top" src="" style="width:38px;height:38px;object-fit:contain;display:none;">
+            <div>
+                <div class="fw-bold text-dark" style="font-size:14px; line-height:1.2" id="voter-org-top">E-Voting</div>
+                <div class="small text-muted" style="font-size:10px" id="voter-judul-top">Sistem Terpadu</div>
+            </div>
+        </div>
+        <button class="btn btn-sm btn-light border shadow-sm rounded-circle d-flex justify-content-center align-items-center" onclick="refVoter()" style="width:38px;height:38px;"><i class="bi bi-arrow-clockwise fs-5 text-primary"></i></button>
+    </div>
+
+    <div class="bottom-nav d-md-none">
+        <div class="nav-item-m" onclick="voterNav('profil')" id="bnav-profil">
+            <i class="bi bi-person-circle"></i><span>Profil</span>
+        </div>
+        <div class="nav-item-m" onclick="dlCard(ME.token)">
+            <i class="bi bi-card-heading"></i><span>Kartu</span>
+        </div>
+        
+        <div class="nav-item-m nav-fab" onclick="voterNav('vote')" id="bnav-vote">
+            <i class="bi bi-check2-circle"></i><span>Bilik</span>
+        </div>
+        
+        <div class="nav-item-m" onclick="nav('live')">
+            <i class="bi bi-bar-chart-line-fill"></i><span>Hasil</span>
+        </div>
+        <div class="nav-item-m text-danger" onclick="logout()">
+            <i class="bi bi-box-arrow-right"></i><span>Keluar</span>
+        </div>
+    </div>
+
     <div class="content">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-         <button class="btn btn-dark d-md-none shadow" onclick="toggleMenu()"><i class="bi bi-list"></i> Menu</button>
+      <div class="d-none d-md-flex justify-content-between align-items-center mb-3">
          <button class="btn btn-sm btn-outline-primary" onclick="refVoter()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
       </div>
-      <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
-          <h4 class="fw-bold m-0 text-dark">Selamat Datang, <span id="v-name" class="text-primary">User</span></h4>
+      <div class="d-none d-md-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+          <h4 class="fw-bold m-0 text-dark">Selamat Datang, <span id="v-name-desktop" class="text-primary">User</span></h4>
+      </div>
+
+      <div class="d-md-none mb-3 border-bottom pb-2 text-center">
+          <h5 class="fw-bold m-0 text-dark">Halo, <span id="v-name" class="text-primary">User</span></h5>
       </div>
       
       <div id="vp-vote">
@@ -314,7 +353,7 @@
             <h1 class="display-1 text-success mb-3"><i class="bi bi-patch-check-fill"></i></h1>
             <h3 class="fw-bold">TERIMA KASIH!</h3>
             <p class="lead">Suara Anda telah berhasil dicatat.</p>
-            <button class="btn btn-outline-success mt-3" onclick="nav('live')">Lihat Hasil Sementara</button>
+            <button class="btn btn-outline-success mt-3 d-none d-md-inline-block" onclick="nav('live')">Lihat Hasil Sementara</button>
         </div>
 
         <div id="v-wait" class="d-none text-center p-5">
@@ -348,12 +387,12 @@
       </div>
       
       <div id="vp-profil" class="d-none">
-          <div class="card-box mx-auto mb-3 text-center" style="max-width:600px; background: #e0f2fe; border: 1px dashed #0ea5e9;">
+          <div class="card-box mx-auto mb-3 text-center d-none d-md-block" style="max-width:600px; background: #e0f2fe; border: 1px dashed #0ea5e9;">
               <h6 class="fw-bold text-primary m-0"><i class="bi bi-card-heading"></i> KARTU PEMILIH</h6>
               <p class="small text-muted mb-2">Simpan kartu ini sebagai bukti hak pilih Anda.</p>
               <button type="button" class="btn btn-sm btn-primary rounded-pill px-4" onclick="dlCard(ME.token)"><i class="bi bi-download"></i> UNDUH KARTU SAYA (PDF)</button>
           </div>
-          <div class="card-box mx-auto" style="max-width:600px">
+          <div class="card-box mx-auto shadow-sm" style="max-width:600px">
               <h5 class="fw-bold mb-4 border-bottom pb-2">Update Profil</h5>
               <form onsubmit="saveProfile(event)">
                   <div class="text-center mb-4">
@@ -385,7 +424,7 @@
                       <div class="col-md-6"><label class="small fw-bold mb-1">Provinsi</label><select id="p-prov" class="form-select bg-light" onchange="ldKabProf()"></select></div>
                       <div class="col-md-6"><label class="small fw-bold mb-1">Kab/Kota</label><select id="p-kab" class="form-select bg-light"></select></div>
                   </div>
-                  <button class="btn btn-primary w-100 py-2 fw-bold">SIMPAN PERUBAHAN</button>
+                  <button class="btn btn-primary w-100 py-3 fw-bold rounded-pill">SIMPAN PERUBAHAN</button>
               </form>
           </div>
       </div>
@@ -395,14 +434,21 @@
   <div id="v-live" class="view-section bg-dark text-white min-vh-100">
     <div class="live-header shadow d-flex align-items-center justify-content-between">
        <div class="d-flex align-items-center gap-3">
-           <img id="live-logo" src="" class="bg-white rounded-circle p-1" style="width:60px;height:60px;object-fit:cover;display:none">
-           <div><h4 class="fw-bold m-0" id="live-org">LOADING...</h4><div class="small opacity-75" id="live-judul">Mohon Tunggu</div></div>
+           <img id="live-logo" src="" class="bg-white rounded-circle p-1" style="width:50px;height:50px;object-fit:cover;display:none">
+           <div><h5 class="fw-bold m-0" id="live-org">LOADING...</h5><div class="small opacity-75" id="live-judul">Mohon Tunggu</div></div>
        </div>
+       
        <div class="text-end">
-         <div class="small opacity-50 font-monospace" id="label-timer">WAKTU</div>
-         <h2 class="fw-bold m-0 font-monospace" id="timer-live">--:--:--</h2>
-         <button class="btn btn-sm btn-outline-light mt-2 rounded-pill px-3" onclick="checkLogin()">LOGIN SYSTEM</button>
-         <button class="btn btn-sm btn-light text-dark rounded-circle ms-2" onclick="tick()" title="Refresh"><i class="bi bi-arrow-clockwise"></i></button>
+         <div class="d-none d-md-block">
+             <div class="small opacity-50 font-monospace">WAKTU TERSISA</div>
+             <h2 class="fw-bold m-0 font-monospace" id="timer-live">--:--:--</h2>
+             <button class="btn btn-sm btn-outline-light mt-2 rounded-pill px-3 fw-bold" id="btn-live-login-top" onclick="checkLoginRedirect()">LOGIN SYSTEM</button>
+             <button class="btn btn-sm btn-light text-dark rounded-circle ms-2" onclick="tick()" title="Refresh"><i class="bi bi-arrow-clockwise"></i></button>
+         </div>
+         
+         <div class="d-md-none">
+             <button class="btn btn-light text-dark rounded-circle shadow-sm" onclick="tick()" style="width:40px;height:40px;"><i class="bi bi-arrow-clockwise fs-5"></i></button>
+         </div>
        </div>
     </div>
     
@@ -416,6 +462,7 @@
     </div>
 
     <div class="container mt-4 pb-5" style="max-width:800px" id="race-area"></div>
+    
     <div id="live-wait" class="d-none container mt-5 text-center">
         <h1 class="display-1 text-danger mb-4"><i class="bi bi-hourglass-split"></i></h1>
         <h2 class="fw-bold mb-3">WAKTU PEMILIHAN BELUM DIBUKA</h2>
@@ -423,8 +470,12 @@
         <div class="display-3 fw-bold text-danger mt-4 font-monospace blink-red" id="timer-live-wait">--:--:--</div>
     </div>
 
-    <div class="live-footer mt-5 mb-3 text-center text-white-50 small" style="padding: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
-        Keterangan: Untuk menjaga kestabilan server, klik tombol <b>Refresh (Panah Melingkar)</b> di pojok kanan atas untuk melihat hasil suara terbaru. Sistem akan otomatis melakukan sinkronisasi massal pada 20 detik terakhir penutupan waktu voting.
+    <div class="live-bottom-nav d-md-none">
+        <div>
+            <div class="small text-white-50" style="font-size:10px">WAKTU TERSISA:</div>
+            <h4 class="fw-bold m-0 font-monospace text-warning" id="timer-live-bottom">--:--:--</h4>
+        </div>
+        <button id="btn-live-login" class="btn btn-primary rounded-pill px-4 py-2 fw-bold shadow" onclick="nav('login')"><i class="bi bi-box-arrow-in-right"></i> LOGIN</button>
     </div>
   </div>
 
@@ -437,7 +488,7 @@
               <h2 class="fw-bold text-dark" id="win-name">Nama</h2>
               <p class="lead text-muted">Memperoleh suara terbanyak!</p>
               <div class="display-3 fw-bold text-primary" id="win-score">0</div>
-              <button type="button" class="btn btn-secondary mt-4 px-5 fw-bold" data-bs-dismiss="modal">TUTUP</button>
+              <button type="button" class="btn btn-secondary mt-4 px-5 fw-bold rounded-pill py-2" data-bs-dismiss="modal">TUTUP</button>
           </div>
       </div>
   </div>
@@ -450,7 +501,7 @@
               <p class="text-muted">Perolehan suara tertinggi sama kuat:</p>
               <div id="draw-list" class="my-4"></div>
               <h3 class="fw-bold text-dark">Total Suara: <span id="draw-score">0</span></h3>
-              <button type="button" class="btn btn-secondary mt-4 px-5 fw-bold" data-bs-dismiss="modal">TUTUP</button>
+              <button type="button" class="btn btn-secondary mt-4 px-5 fw-bold rounded-pill py-2" data-bs-dismiss="modal">TUTUP</button>
           </div>
       </div>
   </div>
@@ -482,8 +533,7 @@
                   <p class="small text-muted mb-1">Upload File CSV:</p>
                   <p class="small text-muted mb-1">Catatan: Data isian CSV tidak boleh menggunakan tanda koma (",").</p>
                   <input type="file" id="csvFileInput" class="form-control mb-3" accept=".csv" onchange="readCSVFile(this)">
-                  <!--<textarea id="csvIn" class="form-control mb-2 font-monospace small" rows="4" placeholder="Atau paste isi CSV di sini..."></textarea> -->
-                  <button class="btn btn-success w-100 mt-2" onclick="runImport()">Proses Import</button>
+                  <button class="btn btn-success w-100 mt-2 py-2 fw-bold" onclick="runImport()">Proses Import</button>
               </div>
           </div>
       </div>
@@ -493,7 +543,7 @@
       <div class="modal-dialog">
           <div class="modal-content">
               <div class="modal-body p-4" id="viewBody"></div>
-              <div class="modal-footer py-1"><button class="btn btn-sm btn-secondary w-100" data-bs-dismiss="modal">Tutup</button></div>
+              <div class="modal-footer py-1"><button class="btn btn-sm btn-secondary w-100 rounded-pill" data-bs-dismiss="modal">Tutup</button></div>
           </div>
       </div>
   </div>
@@ -613,15 +663,7 @@
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app, "evoting-atas-indonesia");
 
-      window.db = db; 
-      window.collection = collection; 
-      window.getDocs = getDocs; 
-      window.doc = doc; 
-      window.getDoc = getDoc; 
-      window.setDoc = setDoc; 
-      window.updateDoc = updateDoc; 
-      window.deleteDoc = deleteDoc; 
-      window.runTransaction = runTransaction;
+      window.db = db; window.collection = collection; window.getDocs = getDocs; window.doc = doc; window.getDoc = getDoc; window.setDoc = setDoc; window.updateDoc = updateDoc; window.deleteDoc = deleteDoc; window.runTransaction = runTransaction;
       
       window.firebaseLoaded = true;
       if (typeof window.checkFirebase === 'function') window.checkFirebase();
@@ -631,43 +673,43 @@
     // --- DATA WILAYAH ---
     const WIL = {
         "ACEH": ["KABUPATEN ACEH SELATAN", "KABUPATEN ACEH TENGGARA", "KABUPATEN ACEH TIMUR", "KABUPATEN ACEH TENGAH", "KABUPATEN ACEH BARAT", "KABUPATEN ACEH BESAR", "KABUPATEN PIDIE", "KABUPATEN ACEH UTARA", "KABUPATEN SIMEULUE", "KABUPATEN ACEH SINGKIL", "KABUPATEN BIREUEN", "KABUPATEN ACEH BARAT DAYA", "KABUPATEN GAYO LUES", "KABUPATEN ACEH JAYA", "KABUPATEN NAGAN RAYA", "KABUPATEN ACEH TAMIANG", "KABUPATEN BENER MERIAH", "KABUPATEN PIDIE JAYA", "KOTA BANDA ACEH", "KOTA SABANG", "KOTA LHOKSEUMAWE", "KOTA LANGSA", "KOTA SUBULUSSALAM"],
-"SUMATERA UTARA": ["KABUPATEN TAPANULI TENGAH", "KABUPATEN TAPANULI UTARA", "KABUPATEN TAPANULI SELATAN", "KABUPATEN NIAS", "KABUPATEN LANGKAT", "KABUPATEN KARO", "KABUPATEN DELI SERDANG", "KABUPATEN SIMALUNGUN", "KABUPATEN ASAHAN", "KABUPATEN LABUHANBATU", "KABUPATEN DAIRI", "KABUPATEN TOBA", "KABUPATEN MANDAILING NATAL", "KABUPATEN NIAS SELATAN", "KABUPATEN PAKPAK BHARAT", "KABUPATEN HUMBANG HASUNDUTAN", "KABUPATEN SAMOSIR", "KABUPATEN SERDANG BEDAGAI", "KABUPATEN BATU BARA", "KABUPATEN PADANG LAWAS UTARA", "KABUPATEN PADANG LAWAS", "KABUPATEN LABUHANBATU SELATAN", "KABUPATEN LABUHANBATU UTARA", "KABUPATEN NIAS UTARA", "KABUPATEN NIAS BARAT", "KOTA MEDAN", "KOTA PEMATANGSIANTAR", "KOTA SIBOLGA", "KOTA TANJUNG BALAI", "KOTA BINJAI", "KOTA TEBING TINGGI", "KOTA PADANGSIDIMPUAN", "KOTA GUNUNGSITOLI"],
-"SUMATERA BARAT": ["KABUPATEN PESISIR SELATAN", "KABUPATEN SOLOK", "KABUPATEN SIJUNJUNG", "KABUPATEN TANAH DATAR", "KABUPATEN PADANG PARIAMAN", "KABUPATEN AGAM", "KABUPATEN LIMA PULUH KOTA", "KABUPATEN PASAMAN", "KABUPATEN KEPULAUAN MENTAWAI", "KABUPATEN DHARMASRAYA", "KABUPATEN SOLOK SELATAN", "KABUPATEN PASAMAN BARAT", "KOTA PADANG", "KOTA SOLOK", "KOTA SAWAHLUNTO", "KOTA PADANG PANJANG", "KOTA BUKITTINGGI", "KOTA PAYAKUMBUH", "KOTA PARIAMAN"],
-"RIAU": ["KABUPATEN KAMPAR", "KABUPATEN INDRAGIRI HULU", "KABUPATEN BENGKALIS", "KABUPATEN INDRAGIRI HILIR", "KABUPATEN PELALAWAN", "KABUPATEN ROKAN HULU", "KABUPATEN ROKAN HILIR", "KABUPATEN SIAK", "KABUPATEN KUANTAN SINGINGI", "KABUPATEN KEPULAUAN MERANTI", "KOTA PEKANBARU", "KOTA DUMAI"],
-"JAMBI": ["KABUPATEN KERINCI", "KABUPATEN MERANGIN", "KABUPATEN SAROLANGUN", "KABUPATEN BATANGHARI", "KABUPATEN MUARO JAMBI", "KABUPATEN TANJUNG JABUNG BARAT", "KABUPATEN TANJUNG JABUNG TIMUR", "KABUPATEN BUNGO", "KABUPATEN TEBO", "KOTA JAMBI", "KOTA SUNGAI PENUH"],
-"SUMATERA SELATAN": ["KABUPATEN OGAN KOMERING ULU", "KABUPATEN OGAN KOMERING ILIR", "KABUPATEN MUARA ENIM", "KABUPATEN LAHAT", "KABUPATEN MUSI RAWAS", "KABUPATEN MUSI BANYUASIN", "KABUPATEN BANYUASIN", "KABUPATEN OGAN KOMERING ULU TIMUR", "KABUPATEN OGAN KOMERING ULU SELATAN", "KABUPATEN OGAN ILIR", "KABUPATEN EMPAT LAWANG", "KABUPATEN PENUKAL ABAB LEMATANG ILIR", "KABUPATEN MUSI RAWAS UTARA", "KOTA PALEMBANG", "KOTA PAGAR ALAM", "KOTA LUBUK LINGGAU", "KOTA PRABUMULIH"],
-"BENGKULU": ["KABUPATEN BENGKULU SELATAN", "KABUPATEN REJANG LEBONG", "KABUPATEN BENGKULU UTARA", "KABUPATEN KAUR", "KABUPATEN SELUMA", "KABUPATEN MUKO MUKO", "KABUPATEN LEBONG", "KABUPATEN KEPAHIANG", "KABUPATEN BENGKULU TENGAH", "KOTA BENGKULU"],
-"LAMPUNG": ["KABUPATEN LAMPUNG SELATAN", "KABUPATEN LAMPUNG TENGAH", "KABUPATEN LAMPUNG UTARA", "KABUPATEN LAMPUNG BARAT", "KABUPATEN TULANG BAWANG", "KABUPATEN TANGGAMUS", "KABUPATEN LAMPUNG TIMUR", "KABUPATEN WAY KANAN", "KABUPATEN PESAWARAN", "KABUPATEN PRINGSEWU", "KABUPATEN MESUJI", "KABUPATEN TULANG BAWANG BARAT", "KABUPATEN PESISIR BARAT", "KOTA BANDAR LAMPUNG", "KOTA METRO"],
-"KEPULAUAN BANGKA BELITUNG": ["KABUPATEN BANGKA", "KABUPATEN BELITUNG", "KABUPATEN BANGKA SELATAN", "KABUPATEN BANGKA TENGAH", "KABUPATEN BANGKA BARAT", "KABUPATEN BELITUNG TIMUR", "KOTA PANGKAL PINANG"],
-"KEPULAUAN RIAU": ["KABUPATEN BINTAN", "KABUPATEN KARIMUN", "KABUPATEN NATUNA", "KABUPATEN LINGGA", "KABUPATEN KEPULAUAN ANAMBAS", "KOTA BATAM", "KOTA TANJUNG PINANG"],
-"DKI JAKARTA": ["KABUPATEN KEPULAUAN SERIBU", "KOTA JAKARTA PUSAT", "KOTA JAKARTA UTARA", "KOTA JAKARTA BARAT", "KOTA JAKARTA SELATAN", "KOTA JAKARTA TIMUR"],
-"JAWA BARAT": ["KABUPATEN BOGOR", "KABUPATEN SUKABUMI", "KABUPATEN CIANJUR", "KABUPATEN BANDUNG", "KABUPATEN GARUT", "KABUPATEN TASIKMALAYA", "KABUPATEN CIAMIS", "KABUPATEN KUNINGAN", "KABUPATEN CIREBON", "KABUPATEN MAJALENGKA", "KABUPATEN SUMEDANG", "KABUPATEN INDRAMAYU", "KABUPATEN SUBANG", "KABUPATEN PURWAKARTA", "KABUPATEN KARAWANG", "KABUPATEN BEKASI", "KABUPATEN BANDUNG BARAT", "KABUPATEN PANGANDARAN", "KOTA BOGOR", "KOTA SUKABUMI", "KOTA BANDUNG", "KOTA CIREBON", "KOTA BEKASI", "KOTA DEPOK", "KOTA CIMAHI", "KOTA TASIKMALAYA", "KOTA BANJAR"],
-"JAWA TENGAH": ["KABUPATEN CILACAP", "KABUPATEN BANYUMAS", "KABUPATEN PURBALINGGA", "KABUPATEN BANJARNEGARA", "KABUPATEN KEBUMEN", "KABUPATEN PURWOREJO", "KABUPATEN WONOSOBO", "KABUPATEN MAGELANG", "KABUPATEN BOYOLALI", "KABUPATEN KLATEN", "KABUPATEN SUKOHARJO", "KABUPATEN WONOGIRI", "KABUPATEN KARANGANYAR", "KABUPATEN SRAGEN", "KABUPATEN GROBOGAN", "KABUPATEN BLORA", "KABUPATEN REMBANG", "KABUPATEN PATI", "KABUPATEN KUDUS", "KABUPATEN JEPARA", "KABUPATEN DEMAK", "KABUPATEN SEMARANG", "KABUPATEN TEMANGGUNG", "KABUPATEN KENDAL", "KABUPATEN BATANG", "KABUPATEN PEKALONGAN", "KABUPATEN PEMALANG", "KABUPATEN TEGAL", "KABUPATEN BREBES", "KOTA MAGELANG", "KOTA SURAKARTA", "KOTA SALATIGA", "KOTA SEMARANG", "KOTA PEKALONGAN", "KOTA TEGAL"],
-"D.I. YOGYAKARTA": ["KABUPATEN KULON PROGO", "KABUPATEN BANTUL", "KABUPATEN GUNUNGKIDUL", "KABUPATEN SLEMAN", "KOTA YOGYAKARTA"],
-"JAWA TIMUR": ["KABUPATEN PACITAN", "KABUPATEN PONOROGO", "KABUPATEN TRENGGALEK", "KABUPATEN TULUNGAGUNG", "KABUPATEN BLITAR", "KABUPATEN KEDIRI", "KABUPATEN MALANG", "KABUPATEN LUMAJANG", "KABUPATEN JEMBER", "KABUPATEN BANYUWANGI", "KABUPATEN BONDOWOSO", "KABUPATEN SITUBONDO", "KABUPATEN PROBOLINGGO", "KABUPATEN PASURUAN", "KABUPATEN SIDOARJO", "KABUPATEN MOJOKERTO", "KABUPATEN JOMBANG", "KABUPATEN NGANJUK", "KABUPATEN MADIUN", "KABUPATEN MAGETAN", "KABUPATEN NGAWI", "KABUPATEN BOJONEGORO", "KABUPATEN TUBAN", "KABUPATEN LAMONGAN", "KABUPATEN GRESIK", "KABUPATEN BANGKALAN", "KABUPATEN SAMPANG", "KABUPATEN PAMEKASAN", "KABUPATEN SUMENEP", "KOTA KEDIRI", "KOTA BLITAR", "KOTA MALANG", "KOTA PROBOLINGGO", "KOTA PASURUAN", "KOTA MOJOKERTO", "KOTA MADIUN", "KOTA SURABAYA", "KOTA BATU"],
-"BANTEN": ["KABUPATEN PANDEGLANG", "KABUPATEN LEBAK", "KABUPATEN TANGERANG", "KABUPATEN SERANG", "KOTA TANGERANG", "KOTA CILEGON", "KOTA SERANG", "KOTA TANGERANG SELATAN"],
-"BALI": ["KABUPATEN JEMBRANA", "KABUPATEN TABANAN", "KABUPATEN BADUNG", "KABUPATEN GIANYAR", "KABUPATEN KLUNGKUNG", "KABUPATEN BANGLI", "KABUPATEN KARANGASEM", "KABUPATEN BULELENG", "KOTA DENPASAR"],
-"NUSA TENGGARA BARAT": ["KABUPATEN LOMBOK BARAT", "KABUPATEN LOMBOK TENGAH", "KABUPATEN LOMBOK TIMUR", "KABUPATEN SUMBAWA", "KABUPATEN DOMPU", "KABUPATEN BIMA", "KABUPATEN SUMBAWA BARAT", "KABUPATEN LOMBOK UTARA", "KOTA MATARAM", "KOTA BIMA"],
-"NUSA TENGGARA TIMUR": ["KABUPATEN KUPANG", "KABUPATEN TIMOR TENGAH SELATAN", "KABUPATEN TIMOR TENGAH UTARA", "KABUPATEN BELU", "KABUPATEN ALOR", "KABUPATEN FLORES TIMUR", "KABUPATEN SIKKA", "KABUPATEN ENDE", "KABUPATEN NGADA", "KABUPATEN MANGGARAI", "KABUPATEN SUMBA TIMUR", "KABUPATEN SUMBA BARAT", "KABUPATEN LEMBATA", "KABUPATEN ROTE NDAO", "KABUPATEN MANGGARAI BARAT", "KABUPATEN NAGEKEO", "KABUPATEN SUMBA TENGAH", "KABUPATEN SUMBA BARAT DAYA", "KABUPATEN MANGGARAI TIMUR", "KABUPATEN SABU RAIJUA", "KABUPATEN MALAKA", "KOTA KUPANG"],
-"KALIMANTAN BARAT": ["KABUPATEN SAMBAS", "KABUPATEN MEMPAWAH", "KABUPATEN SANGGAU", "KABUPATEN KETAPANG", "KABUPATEN SINTANG", "KABUPATEN KAPUAS HULU", "KABUPATEN BENGKAYANG", "KABUPATEN LANDAK", "KABUPATEN SEKADAU", "KABUPATEN MELAWI", "KABUPATEN KAYONG UTARA", "KABUPATEN KUBU RAYA", "KOTA PONTIANAK", "KOTA SINGKAWANG"],
-"KALIMANTAN TENGAH": ["KABUPATEN KOTAWARINGIN BARAT", "KABUPATEN KOTAWARINGIN TIMUR", "KABUPATEN KAPUAS", "KABUPATEN BARITO SELATAN", "KABUPATEN BARITO UTARA", "KABUPATEN KATINGAN", "KABUPATEN SERUYAN", "KABUPATEN SUKAMARA", "KABUPATEN LAMANDAU", "KABUPATEN GUNUNG MAS", "KABUPATEN PULANG PISAU", "KABUPATEN MURUNG RAYA", "KABUPATEN BARITO TIMUR", "KOTA PALANGKARAYA"],
-"KALIMANTAN SELATAN": ["KABUPATEN TANAH LAUT", "KABUPATEN KOTABARU", "KABUPATEN BANJAR", "KABUPATEN BARITO KUALA", "KABUPATEN TAPIN", "KABUPATEN HULU SUNGAI SELATAN", "KABUPATEN HULU SUNGAI TENGAH", "KABUPATEN HULU SUNGAI UTARA", "KABUPATEN TABALONG", "KABUPATEN TANAH BUMBU", "KABUPATEN BALANGAN", "KOTA BANJARMASIN", "KOTA BANJARBARU"],
-"KALIMANTAN TIMUR": ["KABUPATEN PASER", "KABUPATEN KUTAI KARTANEGARA", "KABUPATEN BERAU", "KABUPATEN KUTAI BARAT", "KABUPATEN KUTAI TIMUR", "KABUPATEN PENAJAM PASER UTARA", "KABUPATEN MAHAKAM ULU", "KOTA BALIKPAPAN", "KOTA SAMARINDA", "KOTA BONTANG"],
-"KALIMANTAN UTARA": ["KABUPATEN BULUNGAN", "KABUPATEN MALINAU", "KABUPATEN NUNUKAN", "KABUPATEN TANA TIDUNG", "KOTA TARAKAN"],
-"SULAWESI UTARA": ["KABUPATEN BOLAANG MONGONDOW", "KABUPATEN MINAHASA", "KABUPATEN KEPULAUAN SANGIHE", "KABUPATEN KEPULAUAN TALAUD", "KABUPATEN MINAHASA SELATAN", "KABUPATEN MINAHASA UTARA", "KABUPATEN MINAHASA TENGGARA", "KABUPATEN BOLAANG MONGONDOW UTARA", "KABUPATEN KEPULAUAN SIAU TAGULANDANG BIARO (SITARO)", "KABUPATEN BOLAANG MONGONDOW TIMUR", "KABUPATEN BOLAANG MONGONDOW SELATAN", "KOTA MANADO", "KOTA BITUNG", "KOTA TOMOHON", "KOTA KOTAMOBAGU"],
-"SULAWESI TENGAH": ["KABUPATEN BANGGAI", "KABUPATEN POSO", "KABUPATEN DONGGALA", "KABUPATEN TOLI TOLI", "KABUPATEN BUOL", "KABUPATEN MOROWALI", "KABUPATEN BANGGAI KEPULAUAN", "KABUPATEN PARIGI MOUTONG", "KABUPATEN TOJO UNA UNA", "KABUPATEN SIGI", "KABUPATEN BANGGAI LAUT", "KABUPATEN MOROWALI UTARA", "KOTA PALU"],
-"SULAWESI SELATAN": ["KABUPATEN KEPULAUAN SELAYAR", "KABUPATEN BULUKUMBA", "KABUPATEN BANTAENG", "KABUPATEN JENEPONTO", "KABUPATEN TAKALAR", "KABUPATEN GOWA", "KABUPATEN SINJAI", "KABUPATEN BONE", "KABUPATEN MAROS", "KABUPATEN PANGKAJENE KEPULAUAN", "KABUPATEN BARRU", "KABUPATEN SOPPENG", "KABUPATEN WAJO", "KABUPATEN SIDENRENG RAPPANG", "KABUPATEN PINRANG", "KABUPATEN ENREKANG", "KABUPATEN LUWU", "KABUPATEN TANA TORAJA", "KABUPATEN LUWU UTARA", "KABUPATEN LUWU TIMUR", "KABUPATEN TORAJA UTARA", "KOTA MAKASSAR", "KOTA PARE PARE", "KOTA PALOPO"],
-"SULAWESI TENGGARA": ["KABUPATEN KOLAKA", "KABUPATEN KONAWE", "KABUPATEN MUNA", "KABUPATEN BUTON", "KABUPATEN KONAWE SELATAN", "KABUPATEN BOMBANA", "KABUPATEN WAKATOBI", "KABUPATEN KOLAKA UTARA", "KABUPATEN KONAWE UTARA", "KABUPATEN BUTON UTARA", "KABUPATEN KOLAKA TIMUR", "KABUPATEN KONAWE KEPULAUAN", "KABUPATEN MUNA BARAT", "KABUPATEN BUTON TENGAH", "KABUPATEN BUTON SELATAN", "KOTA KENDARI", "KOTA BAU BAU"],
-"GORONTALO": ["KABUPATEN GORONTALO", "KABUPATEN BOALEMO", "KABUPATEN BONE BOLANGO", "KABUPATEN PAHUWATO", "KABUPATEN GORONTALO UTARA", "KOTA GORONTALO"],
-"SULAWESI BARAT": ["KABUPATEN PASANGKAYU", "KABUPATEN MAMUJU", "KABUPATEN MAMASA", "KABUPATEN POLEWALI MANDAR", "KABUPATEN MAJENE", "KABUPATEN MAMUJU TENGAH"],
-"MALUKU": ["KABUPATEN MALUKU TENGAH", "KABUPATEN MALUKU TENGGARA", "KABUPATEN KEPULAUAN TANIMBAR", "KABUPATEN BURU", "KABUPATEN SERAM BAGIAN TIMUR", "KABUPATEN SERAM BAGIAN BARAT", "KABUPATEN KEPULAUAN ARU", "KABUPATEN MALUKU BARAT DAYA", "KABUPATEN BURU SELATAN", "KOTA AMBON", "KOTA TUAL"],
-"MALUKU UTARA": ["KABUPATEN HALMAHERA BARAT", "KABUPATEN HALMAHERA TENGAH", "KABUPATEN HALMAHERA UTARA", "KABUPATEN HALMAHERA SELATAN", "KABUPATEN KEPULAUAN SULA", "KABUPATEN HALMAHERA TIMUR", "KABUPATEN PULAU MOROTAI", "KABUPATEN PULAU TALIABU", "KOTA TERNATE", "KOTA TIDORE KEPULAUAN"],
-"PAPUA": ["KABUPATEN JAYAPURA", "KABUPATEN KEPULAUAN YAPEN", "KABUPATEN BIAK NUMFOR", "KABUPATEN SARMI", "KABUPATEN KEEROM", "KABUPATEN WAROPEN", "KABUPATEN SUPIORI", "KABUPATEN MAMBERAMO RAYA", "KOTA JAYAPURA"],
-"PAPUA BARAT": ["KABUPATEN MANOKWARI", "KABUPATEN FAK FAK", "KABUPATEN TELUK BINTUNI", "KABUPATEN TELUK WONDAMA", "KABUPATEN KAIMANA", "KABUPATEN MANOKWARI SELATAN", "KABUPATEN PEGUNUNGAN ARFAK"],
-"PAPUA SELATAN": ["KABUPATEN MERAUKE", "KABUPATEN BOVEN DIGOEL", "KABUPATEN MAPPI", "KABUPATEN ASMAT"],
-"PAPUA TENGAH": ["KABUPATEN NABIRE", "KABUPATEN PUNCAK JAYA", "KABUPATEN PANIAI", "KABUPATEN MIMIKA", "KABUPATEN PUNCAK", "KABUPATEN DOGIYAI", "KABUPATEN INTAN JAYA", "KABUPATEN DEIYAI"],
-"PAPUA PEGUNUNGAN": ["KABUPATEN JAYAWIJAYA", "KABUPATEN PEGUNUNGAN BINTANG", "KABUPATEN YAHUKIMO", "KABUPATEN TOLIKARA", "KABUPATEN MAMBERAMO TENGAH", "KABUPATEN YALIMO", "KABUPATEN LANNY JAYA", "KABUPATEN NDUGA"],
-"PAPUA BARAT DAYA": ["KABUPATEN SORONG", "KABUPATEN SORONG SELATAN", "KABUPATEN RAJA AMPAT", "KABUPATEN TAMBRAUW", "KABUPATEN MAYBRAT", "KOTA SORONG"]
+        "SUMATERA UTARA": ["KABUPATEN TAPANULI TENGAH", "KABUPATEN TAPANULI UTARA", "KABUPATEN TAPANULI SELATAN", "KABUPATEN NIAS", "KABUPATEN LANGKAT", "KABUPATEN KARO", "KABUPATEN DELI SERDANG", "KABUPATEN SIMALUNGUN", "KABUPATEN ASAHAN", "KABUPATEN LABUHANBATU", "KABUPATEN DAIRI", "KABUPATEN TOBA", "KABUPATEN MANDAILING NATAL", "KABUPATEN NIAS SELATAN", "KABUPATEN PAKPAK BHARAT", "KABUPATEN HUMBANG HASUNDUTAN", "KABUPATEN SAMOSIR", "KABUPATEN SERDANG BEDAGAI", "KABUPATEN BATU BARA", "KABUPATEN PADANG LAWAS UTARA", "KABUPATEN PADANG LAWAS", "KABUPATEN LABUHANBATU SELATAN", "KABUPATEN LABUHANBATU UTARA", "KABUPATEN NIAS UTARA", "KABUPATEN NIAS BARAT", "KOTA MEDAN", "KOTA PEMATANGSIANTAR", "KOTA SIBOLGA", "KOTA TANJUNG BALAI", "KOTA BINJAI", "KOTA TEBING TINGGI", "KOTA PADANGSIDIMPUAN", "KOTA GUNUNGSITOLI"],
+        "SUMATERA BARAT": ["KABUPATEN PESISIR SELATAN", "KABUPATEN SOLOK", "KABUPATEN SIJUNJUNG", "KABUPATEN TANAH DATAR", "KABUPATEN PADANG PARIAMAN", "KABUPATEN AGAM", "KABUPATEN LIMA PULUH KOTA", "KABUPATEN PASAMAN", "KABUPATEN KEPULAUAN MENTAWAI", "KABUPATEN DHARMASRAYA", "KABUPATEN SOLOK SELATAN", "KABUPATEN PASAMAN BARAT", "KOTA PADANG", "KOTA SOLOK", "KOTA SAWAHLUNTO", "KOTA PADANG PANJANG", "KOTA BUKITTINGGI", "KOTA PAYAKUMBUH", "KOTA PARIAMAN"],
+        "RIAU": ["KABUPATEN KAMPAR", "KABUPATEN INDRAGIRI HULU", "KABUPATEN BENGKALIS", "KABUPATEN INDRAGIRI HILIR", "KABUPATEN PELALAWAN", "KABUPATEN ROKAN HULU", "KABUPATEN ROKAN HILIR", "KABUPATEN SIAK", "KABUPATEN KUANTAN SINGINGI", "KABUPATEN KEPULAUAN MERANTI", "KOTA PEKANBARU", "KOTA DUMAI"],
+        "JAMBI": ["KABUPATEN KERINCI", "KABUPATEN MERANGIN", "KABUPATEN SAROLANGUN", "KABUPATEN BATANGHARI", "KABUPATEN MUARO JAMBI", "KABUPATEN TANJUNG JABUNG BARAT", "KABUPATEN TANJUNG JABUNG TIMUR", "KABUPATEN BUNGO", "KABUPATEN TEBO", "KOTA JAMBI", "KOTA SUNGAI PENUH"],
+        "SUMATERA SELATAN": ["KABUPATEN OGAN KOMERING ULU", "KABUPATEN OGAN KOMERING ILIR", "KABUPATEN MUARA ENIM", "KABUPATEN LAHAT", "KABUPATEN MUSI RAWAS", "KABUPATEN MUSI BANYUASIN", "KABUPATEN BANYUASIN", "KABUPATEN OGAN KOMERING ULU TIMUR", "KABUPATEN OGAN KOMERING ULU SELATAN", "KABUPATEN OGAN ILIR", "KABUPATEN EMPAT LAWANG", "KABUPATEN PENUKAL ABAB LEMATANG ILIR", "KABUPATEN MUSI RAWAS UTARA", "KOTA PALEMBANG", "KOTA PAGAR ALAM", "KOTA LUBUK LINGGAU", "KOTA PRABUMULIH"],
+        "BENGKULU": ["KABUPATEN BENGKULU SELATAN", "KABUPATEN REJANG LEBONG", "KABUPATEN BENGKULU UTARA", "KABUPATEN KAUR", "KABUPATEN SELUMA", "KABUPATEN MUKO MUKO", "KABUPATEN LEBONG", "KABUPATEN KEPAHIANG", "KABUPATEN BENGKULU TENGAH", "KOTA BENGKULU"],
+        "LAMPUNG": ["KABUPATEN LAMPUNG SELATAN", "KABUPATEN LAMPUNG TENGAH", "KABUPATEN LAMPUNG UTARA", "KABUPATEN LAMPUNG BARAT", "KABUPATEN TULANG BAWANG", "KABUPATEN TANGGAMUS", "KABUPATEN LAMPUNG TIMUR", "KABUPATEN WAY KANAN", "KABUPATEN PESAWARAN", "KABUPATEN PRINGSEWU", "KABUPATEN MESUJI", "KABUPATEN TULANG BAWANG BARAT", "KABUPATEN PESISIR BARAT", "KOTA BANDAR LAMPUNG", "KOTA METRO"],
+        "KEPULAUAN BANGKA BELITUNG": ["KABUPATEN BANGKA", "KABUPATEN BELITUNG", "KABUPATEN BANGKA SELATAN", "KABUPATEN BANGKA TENGAH", "KABUPATEN BANGKA BARAT", "KABUPATEN BELITUNG TIMUR", "KOTA PANGKAL PINANG"],
+        "KEPULAUAN RIAU": ["KABUPATEN BINTAN", "KABUPATEN KARIMUN", "KABUPATEN NATUNA", "KABUPATEN LINGGA", "KABUPATEN KEPULAUAN ANAMBAS", "KOTA BATAM", "KOTA TANJUNG PINANG"],
+        "DKI JAKARTA": ["KABUPATEN KEPULAUAN SERIBU", "KOTA JAKARTA PUSAT", "KOTA JAKARTA UTARA", "KOTA JAKARTA BARAT", "KOTA JAKARTA SELATAN", "KOTA JAKARTA TIMUR"],
+        "JAWA BARAT": ["KABUPATEN BOGOR", "KABUPATEN SUKABUMI", "KABUPATEN CIANJUR", "KABUPATEN BANDUNG", "KABUPATEN GARUT", "KABUPATEN TASIKMALAYA", "KABUPATEN CIAMIS", "KABUPATEN KUNINGAN", "KABUPATEN CIREBON", "KABUPATEN MAJALENGKA", "KABUPATEN SUMEDANG", "KABUPATEN INDRAMAYU", "KABUPATEN SUBANG", "KABUPATEN PURWAKARTA", "KABUPATEN KARAWANG", "KABUPATEN BEKASI", "KABUPATEN BANDUNG BARAT", "KABUPATEN PANGANDARAN", "KOTA BOGOR", "KOTA SUKABUMI", "KOTA BANDUNG", "KOTA CIREBON", "KOTA BEKASI", "KOTA DEPOK", "KOTA CIMAHI", "KOTA TASIKMALAYA", "KOTA BANJAR"],
+        "JAWA TENGAH": ["KABUPATEN CILACAP", "KABUPATEN BANYUMAS", "KABUPATEN PURBALINGGA", "KABUPATEN BANJARNEGARA", "KABUPATEN KEBUMEN", "KABUPATEN PURWOREJO", "KABUPATEN WONOSOBO", "KABUPATEN MAGELANG", "KABUPATEN BOYOLALI", "KABUPATEN KLATEN", "KABUPATEN SUKOHARJO", "KABUPATEN WONOGIRI", "KABUPATEN KARANGANYAR", "KABUPATEN SRAGEN", "KABUPATEN GROBOGAN", "KABUPATEN BLORA", "KABUPATEN REMBANG", "KABUPATEN PATI", "KABUPATEN KUDUS", "KABUPATEN JEPARA", "KABUPATEN DEMAK", "KABUPATEN SEMARANG", "KABUPATEN TEMANGGUNG", "KABUPATEN KENDAL", "KABUPATEN BATANG", "KABUPATEN PEKALONGAN", "KABUPATEN PEMALANG", "KABUPATEN TEGAL", "KABUPATEN BREBES", "KOTA MAGELANG", "KOTA SURAKARTA", "KOTA SALATIGA", "KOTA SEMARANG", "KOTA PEKALONGAN", "KOTA TEGAL"],
+        "D.I. YOGYAKARTA": ["KABUPATEN KULON PROGO", "KABUPATEN BANTUL", "KABUPATEN GUNUNGKIDUL", "KABUPATEN SLEMAN", "KOTA YOGYAKARTA"],
+        "JAWA TIMUR": ["KABUPATEN PACITAN", "KABUPATEN PONOROGO", "KABUPATEN TRENGGALEK", "KABUPATEN TULUNGAGUNG", "KABUPATEN BLITAR", "KABUPATEN KEDIRI", "KABUPATEN MALANG", "KABUPATEN LUMAJANG", "KABUPATEN JEMBER", "KABUPATEN BANYUWANGI", "KABUPATEN BONDOWOSO", "KABUPATEN SITUBONDO", "KABUPATEN PROBOLINGGO", "KABUPATEN PASURUAN", "KABUPATEN SIDOARJO", "KABUPATEN MOJOKERTO", "KABUPATEN JOMBANG", "KABUPATEN NGANJUK", "KABUPATEN MADIUN", "KABUPATEN MAGETAN", "KABUPATEN NGAWI", "KABUPATEN BOJONEGORO", "KABUPATEN TUBAN", "KABUPATEN LAMONGAN", "KABUPATEN GRESIK", "KABUPATEN BANGKALAN", "KABUPATEN SAMPANG", "KABUPATEN PAMEKASAN", "KABUPATEN SUMENEP", "KOTA KEDIRI", "KOTA BLITAR", "KOTA MALANG", "KOTA PROBOLINGGO", "KOTA PASURUAN", "KOTA MOJOKERTO", "KOTA MADIUN", "KOTA SURABAYA", "KOTA BATU"],
+        "BANTEN": ["KABUPATEN PANDEGLANG", "KABUPATEN LEBAK", "KABUPATEN TANGERANG", "KABUPATEN SERANG", "KOTA TANGERANG", "KOTA CILEGON", "KOTA SERANG", "KOTA TANGERANG SELATAN"],
+        "BALI": ["KABUPATEN JEMBRANA", "KABUPATEN TABANAN", "KABUPATEN BADUNG", "KABUPATEN GIANYAR", "KABUPATEN KLUNGKUNG", "KABUPATEN BANGLI", "KABUPATEN KARANGASEM", "KABUPATEN BULELENG", "KOTA DENPASAR"],
+        "NUSA TENGGARA BARAT": ["KABUPATEN LOMBOK BARAT", "KABUPATEN LOMBOK TENGAH", "KABUPATEN LOMBOK TIMUR", "KABUPATEN SUMBAWA", "KABUPATEN DOMPU", "KABUPATEN BIMA", "KABUPATEN SUMBAWA BARAT", "KABUPATEN LOMBOK UTARA", "KOTA MATARAM", "KOTA BIMA"],
+        "NUSA TENGGARA TIMUR": ["KABUPATEN KUPANG", "KABUPATEN TIMOR TENGAH SELATAN", "KABUPATEN TIMOR TENGAH UTARA", "KABUPATEN BELU", "KABUPATEN ALOR", "KABUPATEN FLORES TIMUR", "KABUPATEN SIKKA", "KABUPATEN ENDE", "KABUPATEN NGADA", "KABUPATEN MANGGARAI", "KABUPATEN SUMBA TIMUR", "KABUPATEN SUMBA BARAT", "KABUPATEN LEMBATA", "KABUPATEN ROTE NDAO", "KABUPATEN MANGGARAI BARAT", "KABUPATEN NAGEKEO", "KABUPATEN SUMBA TENGAH", "KABUPATEN SUMBA BARAT DAYA", "KABUPATEN MANGGARAI TIMUR", "KABUPATEN SABU RAIJUA", "KABUPATEN MALAKA", "KOTA KUPANG"],
+        "KALIMANTAN BARAT": ["KABUPATEN SAMBAS", "KABUPATEN MEMPAWAH", "KABUPATEN SANGGAU", "KABUPATEN KETAPANG", "KABUPATEN SINTANG", "KABUPATEN KAPUAS HULU", "KABUPATEN BENGKAYANG", "KABUPATEN LANDAK", "KABUPATEN SEKADAU", "KABUPATEN MELAWI", "KABUPATEN KAYONG UTARA", "KABUPATEN KUBU RAYA", "KOTA PONTIANAK", "KOTA SINGKAWANG"],
+        "KALIMANTAN TENGAH": ["KABUPATEN KOTAWARINGIN BARAT", "KABUPATEN KOTAWARINGIN TIMUR", "KABUPATEN KAPUAS", "KABUPATEN BARITO SELATAN", "KABUPATEN BARITO UTARA", "KABUPATEN KATINGAN", "KABUPATEN SERUYAN", "KABUPATEN SUKAMARA", "KABUPATEN LAMANDAU", "KABUPATEN GUNUNG MAS", "KABUPATEN PULANG PISAU", "KABUPATEN MURUNG RAYA", "KABUPATEN BARITO TIMUR", "KOTA PALANGKARAYA"],
+        "KALIMANTAN SELATAN": ["KABUPATEN TANAH LAUT", "KABUPATEN KOTABARU", "KABUPATEN BANJAR", "KABUPATEN BARITO KUALA", "KABUPATEN TAPIN", "KABUPATEN HULU SUNGAI SELATAN", "KABUPATEN HULU SUNGAI TENGAH", "KABUPATEN HULU SUNGAI UTARA", "KABUPATEN TABALONG", "KABUPATEN TANAH BUMBU", "KABUPATEN BALANGAN", "KOTA BANJARMASIN", "KOTA BANJARBARU"],
+        "KALIMANTAN TIMUR": ["KABUPATEN PASER", "KABUPATEN KUTAI KARTANEGARA", "KABUPATEN BERAU", "KABUPATEN KUTAI BARAT", "KABUPATEN KUTAI TIMUR", "KABUPATEN PENAJAM PASER UTARA", "KABUPATEN MAHAKAM ULU", "KOTA BALIKPAPAN", "KOTA SAMARINDA", "KOTA BONTANG"],
+        "KALIMANTAN UTARA": ["KABUPATEN BULUNGAN", "KABUPATEN MALINAU", "KABUPATEN NUNUKAN", "KABUPATEN TANA TIDUNG", "KOTA TARAKAN"],
+        "SULAWESI UTARA": ["KABUPATEN BOLAANG MONGONDOW", "KABUPATEN MINAHASA", "KABUPATEN KEPULAUAN SANGIHE", "KABUPATEN KEPULAUAN TALAUD", "KABUPATEN MINAHASA SELATAN", "KABUPATEN MINAHASA UTARA", "KABUPATEN MINAHASA TENGGARA", "KABUPATEN BOLAANG MONGONDOW UTARA", "KABUPATEN KEPULAUAN SIAU TAGULANDANG BIARO (SITARO)", "KABUPATEN BOLAANG MONGONDOW TIMUR", "KABUPATEN BOLAANG MONGONDOW SELATAN", "KOTA MANADO", "KOTA BITUNG", "KOTA TOMOHON", "KOTA KOTAMOBAGU"],
+        "SULAWESI TENGAH": ["KABUPATEN BANGGAI", "KABUPATEN POSO", "KABUPATEN DONGGALA", "KABUPATEN TOLI TOLI", "KABUPATEN BUOL", "KABUPATEN MOROWALI", "KABUPATEN BANGGAI KEPULAUAN", "KABUPATEN PARIGI MOUTONG", "KABUPATEN TOJO UNA UNA", "KABUPATEN SIGI", "KABUPATEN BANGGAI LAUT", "KABUPATEN MOROWALI UTARA", "KOTA PALU"],
+        "SULAWESI SELATAN": ["KABUPATEN KEPULAUAN SELAYAR", "KABUPATEN BULUKUMBA", "KABUPATEN BANTAENG", "KABUPATEN JENEPONTO", "KABUPATEN TAKALAR", "KABUPATEN GOWA", "KABUPATEN SINJAI", "KABUPATEN BONE", "KABUPATEN MAROS", "KABUPATEN PANGKAJENE KEPULAUAN", "KABUPATEN BARRU", "KABUPATEN SOPPENG", "KABUPATEN WAJO", "KABUPATEN SIDENRENG RAPPANG", "KABUPATEN PINRANG", "KABUPATEN ENREKANG", "KABUPATEN LUWU", "KABUPATEN TANA TORAJA", "KABUPATEN LUWU UTARA", "KABUPATEN LUWU TIMUR", "KABUPATEN TORAJA UTARA", "KOTA MAKASSAR", "KOTA PARE PARE", "KOTA PALOPO"],
+        "SULAWESI TENGGARA": ["KABUPATEN KOLAKA", "KABUPATEN KONAWE", "KABUPATEN MUNA", "KABUPATEN BUTON", "KABUPATEN KONAWE SELATAN", "KABUPATEN BOMBANA", "KABUPATEN WAKATOBI", "KABUPATEN KOLAKA UTARA", "KABUPATEN KONAWE UTARA", "KABUPATEN BUTON UTARA", "KABUPATEN KOLAKA TIMUR", "KABUPATEN KONAWE KEPULAUAN", "KABUPATEN MUNA BARAT", "KABUPATEN BUTON TENGAH", "KABUPATEN BUTON SELATAN", "KOTA KENDARI", "KOTA BAU BAU"],
+        "GORONTALO": ["KABUPATEN GORONTALO", "KABUPATEN BOALEMO", "KABUPATEN BONE BOLANGO", "KABUPATEN PAHUWATO", "KABUPATEN GORONTALO UTARA", "KOTA GORONTALO"],
+        "SULAWESI BARAT": ["KABUPATEN PASANGKAYU", "KABUPATEN MAMUJU", "KABUPATEN MAMASA", "KABUPATEN POLEWALI MANDAR", "KABUPATEN MAJENE", "KABUPATEN MAMUJU TENGAH"],
+        "MALUKU": ["KABUPATEN MALUKU TENGAH", "KABUPATEN MALUKU TENGGARA", "KABUPATEN KEPULAUAN TANIMBAR", "KABUPATEN BURU", "KABUPATEN SERAM BAGIAN TIMUR", "KABUPATEN SERAM BAGIAN BARAT", "KABUPATEN KEPULAUAN ARU", "KABUPATEN MALUKU BARAT DAYA", "KABUPATEN BURU SELATAN", "KOTA AMBON", "KOTA TUAL"],
+        "MALUKU UTARA": ["KABUPATEN HALMAHERA BARAT", "KABUPATEN HALMAHERA TENGAH", "KABUPATEN HALMAHERA UTARA", "KABUPATEN HALMAHERA SELATAN", "KABUPATEN KEPULAUAN SULA", "KABUPATEN HALMAHERA TIMUR", "KABUPATEN PULAU MOROTAI", "KABUPATEN PULAU TALIABU", "KOTA TERNATE", "KOTA TIDORE KEPULAUAN"],
+        "PAPUA": ["KABUPATEN JAYAPURA", "KABUPATEN KEPULAUAN YAPEN", "KABUPATEN BIAK NUMFOR", "KABUPATEN SARMI", "KABUPATEN KEEROM", "KABUPATEN WAROPEN", "KABUPATEN SUPIORI", "KABUPATEN MAMBERAMO RAYA", "KOTA JAYAPURA"],
+        "PAPUA BARAT": ["KABUPATEN MANOKWARI", "KABUPATEN FAK FAK", "KABUPATEN TELUK BINTUNI", "KABUPATEN TELUK WONDAMA", "KABUPATEN KAIMANA", "KABUPATEN MANOKWARI SELATAN", "KABUPATEN PEGUNUNGAN ARFAK"],
+        "PAPUA SELATAN": ["KABUPATEN MERAUKE", "KABUPATEN BOVEN DIGOEL", "KABUPATEN MAPPI", "KABUPATEN ASMAT"],
+        "PAPUA TENGAH": ["KABUPATEN NABIRE", "KABUPATEN PUNCAK JAYA", "KABUPATEN PANIAI", "KABUPATEN MIMIKA", "KABUPATEN PUNCAK", "KABUPATEN DOGIYAI", "KABUPATEN INTAN JAYA", "KABUPATEN DEIYAI"],
+        "PAPUA PEGUNUNGAN": ["KABUPATEN JAYAWIJAYA", "KABUPATEN PEGUNUNGAN BINTANG", "KABUPATEN YAHUKIMO", "KABUPATEN TOLIKARA", "KABUPATEN MAMBERAMO TENGAH", "KABUPATEN YALIMO", "KABUPATEN LANNY JAYA", "KABUPATEN NDUGA"],
+        "PAPUA BARAT DAYA": ["KABUPATEN SORONG", "KABUPATEN SORONG SELATAN", "KABUPATEN RAJA AMPAT", "KABUPATEN TAMBRAUW", "KABUPATEN MAYBRAT", "KOTA SORONG"]
     };
 
     let ME={}, CROP=null, TGT='', POLL=null, PG=1, START_TIME=null, END_TIME=null;
@@ -686,33 +728,22 @@
 
     setTimeout(() => { 
         if(el('loader').style.display !== 'none') { 
-            el('spin').style.display='none'; 
-            el('error-box').style.display='block'; 
+            el('spin').style.display='none'; el('error-box').style.display='block'; 
         } 
     }, 8000);
 
-    const load = s => { 
-        if(s) { el('loader').style.display = 'flex'; el('spin').style.display = 'block'; el('error-box').style.display = 'none'; } 
-        else { el('loader').style.display = 'none'; } 
-    }
+    const load = s => { if(s) { el('loader').style.display = 'flex'; el('spin').style.display = 'block'; el('error-box').style.display = 'none'; } else { el('loader').style.display = 'none'; } }
     function forceEnter(){ load(0); }
 
     function parseDateSafe(str) {
          if(!str) return null;
          try { 
-             let t = new Date(str).getTime(); 
-             if(!isNaN(t)) return t; 
-             let parts = str.split('T'); 
-             if(parts.length < 2) return null; 
-             let d = parts[0].split('-'); let tm = parts[1].split(':'); 
+             let t = new Date(str).getTime(); if(!isNaN(t)) return t; let parts = str.split('T'); 
+             if(parts.length < 2) return null; let d = parts[0].split('-'); let tm = parts[1].split(':'); 
              return new Date(d[0], d[1]-1, d[2], tm[0], tm[1]).getTime(); 
          } catch(e) { return null; }
     }
-    function getTimeStamp(v) { 
-        if (!v) return null; 
-        if (typeof v === 'number') return v; 
-        return parseDateSafe(v); 
-    }
+    function getTimeStamp(v) { if (!v) return null; if (typeof v === 'number') return v; return parseDateSafe(v); }
 
     // INIT
     window.onload = function() {
@@ -727,17 +758,14 @@
                 GLOBAL_CONFIG = confSnap.data();
                 if (GLOBAL_CONFIG.OrgName) el('login-org').innerText = GLOBAL_CONFIG.OrgName;
                 if (GLOBAL_CONFIG.Logo) { 
-                    el('login-logo').src = GLOBAL_CONFIG.Logo; 
-                    el('login-logo').style.display = 'block'; 
-                    el('login-logo-div').style.display = 'none'; 
-                    el('live-logo').src = GLOBAL_CONFIG.Logo; 
+                    el('login-logo').src = GLOBAL_CONFIG.Logo; el('login-logo').style.display = 'block'; 
+                    el('login-logo-div').style.display = 'none'; el('live-logo').src = GLOBAL_CONFIG.Logo; 
                 }
             }
             const sesiLokal = localStorage.getItem('evote_session'); 
             if (sesiLokal) { 
                 ME = JSON.parse(sesiLokal); 
-                if (ME.role === 'admin') { nav('admin'); refAdmin(); } 
-                else { nav('voter'); refVoter(); } 
+                if (ME.role === 'admin') { nav('admin'); refAdmin(); } else { nav('voter'); refVoter(); } 
             }
             load(0);
         } catch(e) { load(0); }
@@ -753,36 +781,56 @@
             let isFound = false;
             querySnap.forEach((doc) => {
                 const data = doc.data();
-                if (data.user === u && data.pass === p) { 
-                    isFound = true; ME = { status: 'success', role: 'admin', token: doc.id, data: { nama: data.nama, user: data.user } }; 
-                }
+                if (data.user === u && data.pass === p) { isFound = true; ME = { status: 'success', role: 'admin', token: doc.id, data: { nama: data.nama, user: data.user } }; }
             });
-
             if (!isFound) {
-                const hashPass = await makeHash(p);
-                const vDoc = await window.getDoc(window.doc(window.db, "voters", u));
+                const hashPass = await makeHash(p); const vDoc = await window.getDoc(window.doc(window.db, "voters", u));
                 if (vDoc.exists()) {
                     const data = vDoc.data();
-                    if (data.pass === hashPass || data.pass === p) { 
-                        isFound = true; ME = { status: 'success', role: 'voter', token: vDoc.id, data: data, voted: data.voted }; 
-                    }
+                    if (data.pass === hashPass || data.pass === p) { isFound = true; ME = { status: 'success', role: 'voter', token: vDoc.id, data: data, voted: data.voted }; }
                 }
             }
-
             load(0);
             if (isFound) { 
                 localStorage.setItem('evote_session', JSON.stringify(ME)); 
-                if (ME.role === 'admin') { nav('admin'); refAdmin(); } 
-                else { nav('voter'); refVoter(); } 
+                if (ME.role === 'admin') { nav('admin'); refAdmin(); } else { nav('voter'); refVoter(); } 
                 Swal.fire('Berhasil', 'Selamat datang', 'success'); 
-            } else { 
-                Swal.fire('Gagal', 'Username atau Password salah!', 'error'); 
-            }
+            } else { Swal.fire('Gagal', 'Username atau Password salah!', 'error'); }
         } catch (error) { load(0); Swal.fire('Error DB', error.message, 'error'); }
     }
 
     function logout(){ localStorage.removeItem('evote_session'); ME={}; nav('login'); }
-    function checkLogin(){ if(ME.role) { if(ME.role=='admin')nav('admin'); else nav('voter'); } else nav('login'); }
+    
+    // Navigasi & Redirect jika belum Login
+    function checkLoginRedirect(){ 
+        if(ME && ME.role) { if(ME.role==='admin') nav('admin'); else nav('voter'); } else nav('login'); 
+    }
+    // Fungsi khusus top bar desktop Live count
+    function checkLogin(){ 
+        if(ME && ME.role) { if(ME.role=='admin')nav('admin'); else nav('voter'); } else nav('login'); 
+    }
+
+    // Ubah Tampilan Tombol Login jadi Logout di Live Count (Khusus HP/Native)
+    function updateLiveAuthBtn() {
+        const btnBtm = el('btn-live-login'); // Tombol mobile
+        const btnTop = el('btn-live-login-top'); // Tombol PC
+        
+        if (ME && ME.token) {
+            if(btnBtm) {
+                btnBtm.innerHTML = '<i class="bi bi-box-arrow-right"></i> LOGOUT';
+                btnBtm.classList.remove('btn-primary'); btnBtm.classList.add('btn-danger');
+                btnBtm.onclick = logout;
+            }
+            if(btnTop) { btnTop.innerHTML = '<i class="bi bi-box-arrow-left"></i> KEMBALI'; btnTop.onclick = checkLoginRedirect; }
+        } else {
+            if(btnBtm) {
+                btnBtm.innerHTML = '<i class="bi bi-box-arrow-in-right"></i> LOGIN';
+                btnBtm.classList.remove('btn-danger'); btnBtm.classList.add('btn-primary');
+                btnBtm.onclick = () => nav('login');
+            }
+            if(btnTop) { btnTop.innerHTML = 'LOGIN SYSTEM'; btnTop.onclick = () => nav('login'); }
+        }
+    }
 
     // ADMIN NAV & REFRESH
     function admNav(p) { 
@@ -803,8 +851,7 @@
             const candSnap = await window.getDocs(window.collection(window.db, "candidates"));
             let cands = []; let totValid = 0;
             candSnap.forEach(d => { let data = d.data(); data.id = d.id; cands.push(data); totValid += (data.suara || 0); });
-            cands.sort((a,b) => a.no - b.no); 
-            GLOBAL_CANDS = cands;
+            cands.sort((a,b) => a.no - b.no); GLOBAL_CANDS = cands;
 
             const votSnap = await window.getDocs(window.collection(window.db, "voters"));
             ALL_VOTERS = []; let totVoted = 0; const q = src.toLowerCase();
@@ -817,227 +864,100 @@
             let stats = { tot: votSnap.size, vot: totVoted, valid: totValid, abstain: totVoted - totValid, belum: votSnap.size - totVoted };
             GLOBAL_CONFIG.stats = stats;
 
-            // --- KODE AGREGATOR: SIMPAN TOTAL KE BUKU PUSAT ---
             await window.setDoc(window.doc(window.db, "config", "utama"), { tot_dpt: votSnap.size, tot_voted: totVoted }, {merge: true});
 
-            if(c.OrgName) el('setOrg').value = c.OrgName; 
-            if(c.OrgFullName) el('setOrgFull').value = c.OrgFullName; 
-            if(c.OrgLegal) el('setOrgLegal').value = c.OrgLegal; 
-            if(c.OrgAddress) el('setOrgAddr').value = c.OrgAddress; 
-            if(c.Judul) el('setJudul').value = c.Judul; 
-            if(c.StartTime) el('setStart').value = c.StartTime; 
-            if(c.EndTime) el('setEnd').value = c.EndTime; 
-            if(c.Web) el('setWeb').value = c.Web; 
-            if(c.Email) el('setEmail').value = c.Email; 
-            if(c.HP) el('setHP').value = c.HP; 
-            if(c.Logo) { el('logoPrev').src=c.Logo; el('logoPrev').style.display='block'; el('logoTxt').style.display='none'; }
+            if(c.OrgName) el('setOrg').value = c.OrgName; if(c.OrgFullName) el('setOrgFull').value = c.OrgFullName; if(c.OrgLegal) el('setOrgLegal').value = c.OrgLegal; if(c.OrgAddress) el('setOrgAddr').value = c.OrgAddress; if(c.Judul) el('setJudul').value = c.Judul; if(c.StartTime) el('setStart').value = c.StartTime; if(c.EndTime) el('setEnd').value = c.EndTime; if(c.Web) el('setWeb').value = c.Web; if(c.Email) el('setEmail').value = c.Email; if(c.HP) el('setHP').value = c.HP; if(c.Logo) { el('logoPrev').src=c.Logo; el('logoPrev').style.display='block'; el('logoTxt').style.display='none'; }
             
-            el('st-tot').innerText = stats.tot; 
-            el('st-vot').innerText = stats.vot; 
-            el('st-abstain').innerText = stats.abstain; 
-            el('st-belum').innerText = stats.belum;
+            el('st-tot').innerText = stats.tot; el('st-vot').innerText = stats.vot; el('st-abstain').innerText = stats.abstain; el('st-belum').innerText = stats.belum;
             
             let dashHTML='';
-            if(cands.length > 0) { 
-                cands.forEach(x => { 
-                    dashHTML += `<div class="col-md-4"><div class="card-box p-3 border-start border-4 border-info d-flex align-items-center gap-3"><div class="bg-light rounded-circle d-flex align-items-center justify-content-center fw-bold text-primary" style="width:50px;height:50px;font-size:1.2rem">${x.no}</div><div><div class="fw-bold text-truncate" style="max-width:150px">${x.nama}</div><div class="h5 fw-bold mb-0 text-primary">${x.suara || 0} Suara</div></div></div></div>`; 
-                }); 
-            }
+            if(cands.length > 0) { cands.forEach(x => { dashHTML += `<div class="col-md-4"><div class="card-box p-3 border-start border-4 border-info d-flex align-items-center gap-3"><div class="bg-light rounded-circle d-flex align-items-center justify-content-center fw-bold text-primary" style="width:50px;height:50px;font-size:1.2rem">${x.no}</div><div><div class="fw-bold text-truncate" style="max-width:150px">${x.nama}</div><div class="h5 fw-bold mb-0 text-primary">${x.suara || 0} Suara</div></div></div></div>`; }); }
             el('dash-cands').innerHTML = dashHTML || '<div class="col-12 text-center text-muted">Belum ada kandidat</div>';
 
             let hc=''; 
-            cands.forEach(cand => { 
-                let fUrl = cand.foto || 'https://via.placeholder.com/80?text=IMG';
-                hc += `<div class="col-md-6"><div class="card-box h-100 d-flex align-items-center gap-3"><img src="${fUrl}" class="cand-admin-img shadow-sm" onerror="this.src='https://via.placeholder.com/80?text=IMG'"><div class="flex-fill overflow-hidden"><div class="badge bg-primary mb-1">No. ${cand.no}</div><div class="fw-bold fs-5 text-dark text-truncate">${cand.nama}</div><div class="text-muted small">${cand.suara || 0} Suara</div></div><div class="d-flex flex-column gap-2"><button class="btn btn-sm btn-light border" onclick="viewData('${cand.id}', 'c')"><i class="bi bi-eye"></i></button><button class="btn btn-sm btn-warning text-white" onclick="mdlCand('${cand.id}')"><i class="bi bi-pencil"></i></button><button class="btn btn-sm btn-danger" onclick="del('candidates','${cand.id}')"><i class="bi bi-trash"></i></button></div></div></div>`; 
-            }); 
+            cands.forEach(cand => { let fUrl = cand.foto || 'https://via.placeholder.com/80?text=IMG'; hc += `<div class="col-md-6"><div class="card-box h-100 d-flex align-items-center gap-3"><img src="${fUrl}" class="cand-admin-img shadow-sm" onerror="this.src='https://via.placeholder.com/80?text=IMG'"><div class="flex-fill overflow-hidden"><div class="badge bg-primary mb-1">No. ${cand.no}</div><div class="fw-bold fs-5 text-dark text-truncate">${cand.nama}</div><div class="text-muted small">${cand.suara || 0} Suara</div></div><div class="d-flex flex-column gap-2"><button class="btn btn-sm btn-light border" onclick="viewData('${cand.id}', 'c')"><i class="bi bi-eye"></i></button><button class="btn btn-sm btn-warning text-white" onclick="mdlCand('${cand.id}')"><i class="bi bi-pencil"></i></button><button class="btn btn-sm btn-danger" onclick="del('candidates','${cand.id}')"><i class="bi bi-trash"></i></button></div></div></div>`; }); 
             el('g-cand').innerHTML = hc || '<div class="text-center text-muted col-12 py-5">Belum ada kandidat</div>';
 
             PG = page; const perPage = 20; const totalPages = Math.ceil(ALL_VOTERS.length / perPage) || 1; el('vPage').innerText = `${PG} dari ${totalPages}`;
-            
             let hv=''; const paginatedVoters = ALL_VOTERS.slice((PG - 1) * perPage, PG * perPage);
-            paginatedVoters.forEach(v => { 
-                let badgeClass = v.voted ? 'bg-success' : 'bg-secondary'; 
-                let badgeText = v.voted ? 'SUDAH MEMILIH' : 'BELUM'; 
-                hv += `<tr><td class="ps-4 fw-bold font-monospace small">${v.user}</td><td>${v.nama || '-'}</td><td><span class="badge ${badgeClass}">${badgeText}</span></td><td class="text-end pe-4"><button class="btn btn-sm btn-info text-white me-1" onclick="dlCard('${v.user}')" title="Cetak Kartu"><i class="bi bi-printer"></i></button><button class="btn btn-sm btn-warning me-1" onclick="mdlVoter('${v.user}')"><i class="bi bi-pencil"></i></button><button class="btn btn-sm btn-outline-danger" onclick="del('voters','${v.user}')"><i class="bi bi-trash"></i></button></td></tr>`; 
-            });
+            paginatedVoters.forEach(v => { let badgeClass = v.voted ? 'bg-success' : 'bg-secondary'; let badgeText = v.voted ? 'SUDAH MEMILIH' : 'BELUM'; hv += `<tr><td class="ps-4 fw-bold font-monospace small">${v.user}</td><td>${v.nama || '-'}</td><td><span class="badge ${badgeClass}">${badgeText}</span></td><td class="text-end pe-4"><button class="btn btn-sm btn-info text-white me-1" onclick="dlCard('${v.user}')" title="Cetak Kartu"><i class="bi bi-printer"></i></button><button class="btn btn-sm btn-warning me-1" onclick="mdlVoter('${v.user}')"><i class="bi bi-pencil"></i></button><button class="btn btn-sm btn-outline-danger" onclick="del('voters','${v.user}')"><i class="bi bi-trash"></i></button></td></tr>`; });
             el('t-voter').innerHTML = hv || '<tr><td colspan="4" class="text-center py-4">Data tidak ditemukan</td></tr>';
             load(0);
         } catch(e) { load(0); Swal.fire('Error Database', e.message, 'error'); }
     }
 
-    function pg(d) { 
-        let n = PG + d; const maxPg = Math.ceil(ALL_VOTERS.length / 20) || 1; 
-        if(n < 1) n = 1; if(n > maxPg) n = maxPg; 
-        refAdmin(n, el('vSearch').value); 
-    }
-    
+    function pg(d) { let n = PG + d; const maxPg = Math.ceil(ALL_VOTERS.length / 20) || 1; if(n < 1) n = 1; if(n > maxPg) n = maxPg; refAdmin(n, el('vSearch').value); }
     function searchVoter() { refAdmin(1, el('vSearch').value); }
     
     function viewData(id, type) {
        let d = type === 'c' ? GLOBAL_CANDS.find(x => x.id === id) : ALL_VOTERS.find(x => x.user === id);
-       if(!d) return;
-       let fUrl = d.foto || 'https://via.placeholder.com/150';
-       
-       let h = `
-       <div class="text-center mb-4"><img src="${fUrl}" class="shadow rounded" style="width:150px;height:200px;object-fit:cover" onerror="this.style.display='none'"></div>
-       <table class="table table-bordered align-middle">`;
-       
-       if(type == 'c') { 
-           h += `
-           <tr><th width="30%">No Urut</th><td class="fw-bold text-primary fs-5">${d.no}</td></tr>
-           <tr><th>Nama Kandidat</th><td>${d.nama}</td></tr>
-           <tr><th>NIA</th><td>${d.nia||'-'}</td></tr>
-           <tr><th>Visi</th><td>${d.visi||'-'}</td></tr>
-           <tr><th>Misi</th><td>${d.misi||'-'}</td></tr>`; 
-       } else { 
-           let statusBadge = d.voted ? '<span class="badge bg-success">SUDAH MEMILIH</span>' : '<span class="badge bg-secondary">BELUM</span>'; 
-           h += `
-           <tr><th>Nama</th><td>${d.nama}</td></tr>
-           <tr><th>Username</th><td>${d.user}</td></tr>
-           <tr><th>Wilayah</th><td>${d.prov||'-'}, ${d.kab||'-'}</td></tr>
-           <tr><th>Status</th><td>${statusBadge}</td></tr>`; 
-       }
-       h += '</table>'; 
-       el('viewBody').innerHTML = h; 
-       new bootstrap.Modal('#mView').show();
+       if(!d) return; let fUrl = d.foto || 'https://via.placeholder.com/150';
+       let h = `<div class="text-center mb-4"><img src="${fUrl}" class="shadow rounded" style="width:150px;height:200px;object-fit:cover" onerror="this.style.display='none'"></div><table class="table table-bordered align-middle">`;
+       if(type == 'c') { h += `<tr><th width="30%">No Urut</th><td class="fw-bold text-primary fs-5">${d.no}</td></tr><tr><th>Nama Kandidat</th><td>${d.nama}</td></tr><tr><th>NIA</th><td>${d.nia||'-'}</td></tr><tr><th>Visi</th><td>${d.visi||'-'}</td></tr><tr><th>Misi</th><td>${d.misi||'-'}</td></tr>`; } else { let statusBadge = d.voted ? '<span class="badge bg-success">SUDAH MEMILIH</span>' : '<span class="badge bg-secondary">BELUM</span>'; h += `<tr><th>Nama</th><td>${d.nama}</td></tr><tr><th>Username</th><td>${d.user}</td></tr><tr><th>Wilayah</th><td>${d.prov||'-'}, ${d.kab||'-'}</td></tr><tr><th>Status</th><td>${statusBadge}</td></tr>`; }
+       h += '</table>'; el('viewBody').innerHTML = h; new bootstrap.Modal('#mView').show();
     }
 
-    // CRUD ADMIN
     async function subCand(e) {
         e.preventDefault(); load(1); let id = el('cid').value;
-        const d = { 
-            no: parseInt(el('cno').value) || 0, nama: el('cnm').value, nia: el('cnia').value, 
-            tp_lahir: el('ctpl').value, tg_lahir: el('ctgl').value, jk: el('cjk').value, 
-            alamat: el('calm').value, visi: el('cvis').value, misi: el('cmis').value, 
-            foto: el('cfn').value ? el('cfn').value : el('cfo').value 
-        };
-        try { 
-            if (id) { await window.updateDoc(window.doc(window.db, "candidates", id), d); } 
-            else { d.suara = 0; await window.setDoc(window.doc(window.collection(window.db, "candidates")), d); } 
-            load(0); bootstrap.Modal.getInstance(el('mCand')).hide(); refAdmin(); Swal.fire('Sukses', 'Kandidat tersimpan!', 'success'); 
-        } catch(error) { load(0); Swal.fire('Gagal', error.message, 'error'); }
+        const d = { no: parseInt(el('cno').value) || 0, nama: el('cnm').value, nia: el('cnia').value, tp_lahir: el('ctpl').value, tg_lahir: el('ctgl').value, jk: el('cjk').value, alamat: el('calm').value, visi: el('cvis').value, misi: el('cmis').value, foto: el('cfn').value ? el('cfn').value : el('cfo').value };
+        try { if (id) { await window.updateDoc(window.doc(window.db, "candidates", id), d); } else { d.suara = 0; await window.setDoc(window.doc(window.collection(window.db, "candidates")), d); } load(0); bootstrap.Modal.getInstance(el('mCand')).hide(); refAdmin(); Swal.fire('Sukses', 'Kandidat tersimpan!', 'success'); } catch(error) { load(0); Swal.fire('Gagal', error.message, 'error'); }
     }
 
     async function subVoter(e) {
         e.preventDefault(); load(1); let id = el('vu').value.trim(); let passTxt = el('vp').value.trim();
-        const d = { 
-            nama: el('vnm').value, nia: el('vnia').value, tp_lahir: el('vtpl').value, 
-            tg_lahir: el('vtgl').value, jk: el('vjk').value, alamat: el('valm').value, 
-            prov: el('vprv').value, kab: el('vkb').value, foto: el('vfn').value ? el('vfn').value : el('vfo').value 
-        };
-        try { 
-            if(passTxt !== "") d.pass = await makeHash(passTxt); 
-            const docRef = window.doc(window.db, "voters", id); 
-            const docSnap = await window.getDoc(docRef); 
-            if (docSnap.exists() && el('vu').readOnly === false) { load(0); Swal.fire('Gagal', 'Username/ID sudah dipakai', 'error'); return; } 
-            if(!docSnap.exists()) d.voted = false; 
-            await window.setDoc(docRef, d, { merge: true }); 
-            load(0); bootstrap.Modal.getInstance(el('mVoter')).hide(); refAdmin(); Swal.fire('Sukses', 'Pemilih tersimpan!', 'success'); 
-        } catch(error) { load(0); Swal.fire('Gagal', error.message, 'error'); }
+        const d = { nama: el('vnm').value, nia: el('vnia').value, tp_lahir: el('vtpl').value, tg_lahir: el('vtgl').value, jk: el('vjk').value, alamat: el('valm').value, prov: el('vprv').value, kab: el('vkb').value, foto: el('vfn').value ? el('vfn').value : el('vfo').value };
+        try { if(passTxt !== "") d.pass = await makeHash(passTxt); const docRef = window.doc(window.db, "voters", id); const docSnap = await window.getDoc(docRef); if (docSnap.exists() && el('vu').readOnly === false) { load(0); Swal.fire('Gagal', 'Username/ID sudah dipakai', 'error'); return; } if(!docSnap.exists()) d.voted = false; await window.setDoc(docRef, d, { merge: true }); load(0); bootstrap.Modal.getInstance(el('mVoter')).hide(); refAdmin(); Swal.fire('Sukses', 'Pemilih tersimpan!', 'success'); } catch(error) { load(0); Swal.fire('Gagal', error.message, 'error'); }
     }
 
-    async function del(t,i) { 
-        Swal.fire({title:'Hapus data?',icon:'warning',showCancelButton:true}).then(async r=>{ 
-            if(r.isConfirmed){ load(1); try { await window.deleteDoc(window.doc(window.db, t, i)); load(0); refAdmin(); } catch(e) { load(0); Swal.fire('Gagal',e.message,'error'); } } 
-        }); 
-    }
+    async function del(t,i) { Swal.fire({title:'Hapus data?',icon:'warning',showCancelButton:true}).then(async r=>{ if(r.isConfirmed){ load(1); try { await window.deleteDoc(window.doc(window.db, t, i)); load(0); refAdmin(); } catch(e) { load(0); Swal.fire('Gagal',e.message,'error'); } } }); }
 
     async function saveSet(e) {
         e.preventDefault(); load(1);
-        const d = { 
-            OrgName: el('setOrg').value, OrgFullName: el('setOrgFull').value, OrgLegal: el('setOrgLegal').value, 
-            OrgAddress: el('setOrgAddr').value, Judul: el('setJudul').value, StartTime: el('setStart').value, 
-            StartTime_TS: getTimeStamp(el('setStart').value), EndTime: el('setEnd').value, 
-            EndTime_TS: getTimeStamp(el('setEnd').value), Web: el('setWeb').value, Email: el('setEmail').value, 
-            HP: el('setHP').value, Logo: el('logoNew').value ? el('logoNew').value : el('logoPrev').src 
-        };
-        try { 
-            await window.setDoc(window.doc(window.db, "config", "utama"), d, { merge: true }); 
-            load(0); Swal.fire('Sukses', 'Pengaturan tersimpan!', 'success'); 
-        } catch(error) { load(0); Swal.fire('Gagal', error.message, 'error'); }
+        const d = { OrgName: el('setOrg').value, OrgFullName: el('setOrgFull').value, OrgLegal: el('setOrgLegal').value, OrgAddress: el('setOrgAddr').value, Judul: el('setJudul').value, StartTime: el('setStart').value, StartTime_TS: getTimeStamp(el('setStart').value), EndTime: el('setEnd').value, EndTime_TS: getTimeStamp(el('setEnd').value), Web: el('setWeb').value, Email: el('setEmail').value, HP: el('setHP').value, Logo: el('logoNew').value ? el('logoNew').value : el('logoPrev').src };
+        try { await window.setDoc(window.doc(window.db, "config", "utama"), d, { merge: true }); load(0); Swal.fire('Sukses', 'Pengaturan tersimpan!', 'success'); } catch(error) { load(0); Swal.fire('Gagal', error.message, 'error'); }
     }
     
     async function changeAdmin(e) {
         e.preventDefault(); load(1); let nUser = el('admUser').value.trim(); let nPass = el('admPass').value.trim();
-        try { 
-            if(nUser && nPass) { 
-                const qSnap = await window.getDocs(window.collection(window.db, "admins")); 
-                if(qSnap.empty) throw new Error("Tidak ada data admin awal."); 
-                let oldDocId = qSnap.docs[0].id; 
-                await window.updateDoc(window.doc(window.db, "admins", oldDocId), { user: nUser, pass: nPass }); 
-                load(0); Swal.fire('Sukses', 'Akun admin diupdate. Silakan login ulang.', 'success').then(()=>logout()); 
-            } 
-        } catch(error) { load(0); Swal.fire('Gagal', error.message, 'error'); }
+        try { if(nUser && nPass) { const qSnap = await window.getDocs(window.collection(window.db, "admins")); if(qSnap.empty) throw new Error("Tidak ada data admin awal."); let oldDocId = qSnap.docs[0].id; await window.updateDoc(window.doc(window.db, "admins", oldDocId), { user: nUser, pass: nPass }); load(0); Swal.fire('Sukses', 'Akun admin diupdate. Silakan login ulang.', 'success').then(()=>logout()); } } catch(error) { load(0); Swal.fire('Gagal', error.message, 'error'); }
     }
 
-    function readCSVFile(input) { 
-        const file = input.files[0]; 
-        if (file) { const reader = new FileReader(); reader.onload = function(e) { el('csvIn').value = e.target.result; }; reader.readAsText(file); } 
-    }
+    function readCSVFile(input) { const file = input.files[0]; if (file) { const reader = new FileReader(); reader.onload = function(e) { el('csvIn').value = e.target.result; }; reader.readAsText(file); } }
 
     async function runImport() {
         load(1);
         try { 
-            const csv = el('csvIn').value.split('\n'); 
-            let count = 0; 
-            
+            const csv = el('csvIn').value.split('\n'); let count = 0; 
             for (let i = 1; i < csv.length; i++) { 
-                let row = csv[i].split(','); // Pisahkan data berdasarkan koma
-                
-                // Pastikan baris memiliki minimal 3 kolom (User, Pass, Nama) dan tidak kosong
+                let row = csv[i].split(','); 
                 if(row.length >= 3 && row[0] && row[0].trim() !== '') { 
-                    let vUser = row[0].trim(); 
-                    let vPass = await makeHash(row[1] ? row[1].trim() : '123'); 
-                    
-                    // Susun data sesuai urutan template CSV baru
-                    let dataDPT = { 
-                        nama: row[2] ? row[2].trim() : '', 
-                        nia: row[3] ? row[3].trim() : '', 
-                        jab: row[4] ? row[4].trim() : '', 
-                        tp_lahir: row[5] ? row[5].trim() : '', 
-                        tg_lahir: row[6] ? row[6].trim() : '', 
-                        jk: row[7] ? row[7].trim() : 'L', 
-                        alamat: row[8] ? row[8].trim() : '', 
-                        prov: row[9] ? row[9].trim() : '', 
-                        kab: row[10] ? row[10].trim() : '', 
-                        pass: vPass, 
-                        voted: false 
-                    };
-                    
-                    await window.setDoc(window.doc(window.db, "voters", vUser), dataDPT, {merge:true}); 
-                    count++; 
+                    let vUser = row[0].trim(); let vPass = await makeHash(row[1] ? row[1].trim() : '123'); 
+                    let dataDPT = { nama: row[2]?row[2].trim():'', nia: row[3]?row[3].trim():'', jab: row[4]?row[4].trim():'', tp_lahir: row[5]?row[5].trim():'', tg_lahir: row[6]?row[6].trim():'', jk: row[7]?row[7].trim():'L', alamat: row[8]?row[8].trim():'', prov: row[9]?row[9].trim():'', kab: row[10]?row[10].trim():'', pass: vPass, voted: false };
+                    await window.setDoc(window.doc(window.db, "voters", vUser), dataDPT, {merge:true}); count++; 
                 } 
             } 
-            load(0); 
-            bootstrap.Modal.getInstance(el('mImport')).hide(); 
-            refAdmin(); 
-            Swal.fire('Selesai', count + ' data DPT berhasil diimpor', 'success'); 
-        } catch(e) { 
-            load(0); 
-            Swal.fire('Gagal', e.message, 'error'); 
-        }
+            load(0); bootstrap.Modal.getInstance(el('mImport')).hide(); refAdmin(); Swal.fire('Selesai', count + ' data DPT berhasil diimpor', 'success'); 
+        } catch(e) { load(0); Swal.fire('Gagal', e.message, 'error'); }
     }
-
+    
     function dlTemp(){ 
-        // Header dan Contoh Data yang sudah dibuat LENGKAP
         const header = "Username,Password,Nama Lengkap,NIA/NIP,Jabatan,Tempat Lahir,Tanggal Lahir,JK,Alamat,Provinsi,Kab/Kota\n";
         const sample = "1700092005081708,12345,Fari Ahmad,1700092005081708,Ketua Kab/kota,Tebo,2005-08-17,L,Jl. Merdeka Raya,JAMBI,KABUPATEN TEBO\n";
-        
         const b = new Blob([header + sample], {type:'text/csv'}); 
-        const a = document.createElement('a'); 
-        a.href = URL.createObjectURL(b); 
-        a.download = 'Template_Pemilih_Lengkap.csv'; 
-        a.click(); 
+        const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'Template_Pemilih_Lengkap.csv'; a.click(); 
     }
 
-    // VOTER AREA
+    // --- VOTER AREA NATIVE UI LOGIC ---
     function voterNav(p) { 
         ['vote','profil'].forEach(x=>el('vp-'+x).classList.add('d-none')); 
         el('vp-'+p).classList.remove('d-none'); 
+        
+        if(el('bnav-profil')) el('bnav-profil').classList.remove('active');
+        if(p === 'profil' && el('bnav-profil')) el('bnav-profil').classList.add('active');
+        
         if(window.innerWidth<768) toggleMenu(); 
     }
 
-    // WAJIB: KEMBALIKAN FUNGSI INI AGAR TIDAK ERROR SAAT LOGIN
     function updateVoterTimer() {
         try {
             const elArea = el('vote-area'), elWait = el('v-wait'), elClosed = el('v-closed'), elTxtWait = el('timer-voter-wait'), elTxtRun = el('timer-voter');
@@ -1054,7 +974,7 @@
             if (status === 'WAIT') { elWait.classList.remove('d-none'); elArea.classList.add('d-none'); if(elClosed) elClosed.classList.add('d-none'); if(elTxtWait) elTxtWait.innerText = formatTime(timeLeft); } 
             else if (status === 'CLOSED') { if(elClosed) elClosed.classList.remove('d-none'); elWait.classList.add('d-none'); elArea.classList.add('d-none'); } 
             else { elArea.classList.remove('d-none'); elWait.classList.add('d-none'); if(elClosed) elClosed.classList.add('d-none'); if(elTxtRun) elTxtRun.innerText = END_TIME ? "Sisa: " + formatTime(timeLeft) : "BERLANGSUNG"; }
-        } catch (e) { console.error("Error Timer Pemilih", e); }
+        } catch (e) {}
     }
 
     async function refVoter() {
@@ -1070,11 +990,17 @@
             localStorage.setItem('evote_session', JSON.stringify(ME));
             
             if (el('v-name')) el('v-name').innerText = d.nama; 
+            if (el('v-name-desktop')) el('v-name-desktop').innerText = d.nama; 
             if (el('p-user')) el('p-user').value = ME.token; 
             if (el('p-tpl')) el('p-tpl').value = d.tp_lahir || ''; 
             if (el('p-tgl')) el('p-tgl').value = d.tg_lahir || ''; 
             if (el('p-alm')) el('p-alm').value = d.alamat || ''; 
             if (d.foto && d.foto.length > 50) { el('p-img').src = d.foto; el('p-img').style.display='block'; el('p-txt').style.display='none'; }
+            
+            // Populasikan Logo dan Judul di Top Bar Mobile
+            if(c.Logo) { el('voter-logo-top').src = c.Logo; el('voter-logo-top').style.display='block'; }
+            if(c.OrgName) el('voter-org-top').innerText = c.OrgName;
+            if(c.Judul) el('voter-judul-top').innerText = c.Judul;
             
             if (el('p-prov')) { 
                 el('p-prov').innerHTML = '<option value="">Pilih Provinsi</option>'; 
@@ -1082,16 +1008,12 @@
                 el('p-prov').value = d.prov || ''; ldKabProf(d.kab); 
             }
             
-            let cands = []; 
-            candSnap.forEach(doc => { let dx=doc.data(); dx.id=doc.id; cands.push(dx); }); 
-            GLOBAL_CANDS = cands; // Simpan untuk popup Profil
+            let cands = []; candSnap.forEach(doc => { let dx=doc.data(); dx.id=doc.id; cands.push(dx); }); GLOBAL_CANDS = cands;
             
             if (ME.voted) { 
                 el('alert-ok').classList.remove('d-none'); el('vote-area').classList.add('d-none'); el('v-wait').classList.add('d-none'); 
             } else { 
-                el('alert-ok').classList.add('d-none'); 
-                cands.sort((a,b) => a.no - b.no); 
-                let h = ''; 
+                el('alert-ok').classList.add('d-none'); cands.sort((a,b) => a.no - b.no); let h = ''; 
                 cands.forEach(cand => { 
                     let fUrl = cand.foto || 'https://via.placeholder.com/400x300?text=No+Image';
                     h += `
@@ -1102,177 +1024,107 @@
                             <div class="p-4 text-center">
                                 <h4 class="fw-bold mb-1">${cand.nama}</h4>
                                 <div class="text-muted small mb-3 text-truncate">${cand.visi||''}</div>
-                                <button class="btn btn-sm btn-outline-info w-100 mb-2 rounded-pill fw-bold" onclick="viewCandProfile('${cand.id}')">
-                                    <i class="bi bi-info-circle-fill me-1"></i> LIHAT PROFIL
-                                </button>
-                                <button class="btn btn-primary w-100 py-2 rounded-pill fw-bold" onclick="vote('${cand.id}','${cand.nama}')">
-                                    COBLOS NO ${cand.no}
-                                </button>
+                                <button class="btn btn-sm btn-outline-info w-100 mb-2 rounded-pill fw-bold" onclick="viewCandProfile('${cand.id}')"><i class="bi bi-info-circle-fill me-1"></i> LIHAT PROFIL</button>
+                                <button class="btn btn-primary w-100 py-2 rounded-pill fw-bold" onclick="vote('${cand.id}','${cand.nama}')">COBLOS NO ${cand.no}</button>
                             </div>
                         </div>
                     </div>`; 
                 }); 
                 el('g-vote').innerHTML = h || '<div class="col-12 text-center py-5"><h4>Belum ada kandidat</h4></div>'; 
             }
-            if(c.StartTime_TS) START_TIME = c.StartTime_TS; 
-            if(c.EndTime_TS) END_TIME = c.EndTime_TS; 
-            updateVoterTimer(); 
-            if (window.POLL) clearInterval(window.POLL); window.POLL = setInterval(updateVoterTimer, 1000); 
+            if(c.StartTime_TS) START_TIME = c.StartTime_TS; if(c.EndTime_TS) END_TIME = c.EndTime_TS; 
+            updateVoterTimer(); if (window.POLL) clearInterval(window.POLL); window.POLL = setInterval(updateVoterTimer, 1000); 
             load(0);
         } catch(e) { load(0); Swal.fire('Error Database', e.message, 'error'); }
     }
 
     async function vote(id, n) {
-        const now = new Date().getTime(); 
-        if(START_TIME && now < START_TIME) { Swal.fire('BELUM DIBUKA', 'Mohon tunggu...', 'warning'); return; }
-        
+        const now = new Date().getTime(); if(START_TIME && now < START_TIME) { Swal.fire('BELUM DIBUKA', 'Mohon tunggu...', 'warning'); return; }
         Swal.fire({title:'Pilih '+n+'?', icon:'question', showCancelButton:true, confirmButtonText:'YA'}).then(async r => {
             if(r.isConfirmed) {
                 load(1);
                 try {
-                    const voterRef = window.doc(window.db, "voters", ME.token); 
-                    const candRef = id === 'ABSTAIN' ? null : window.doc(window.db, "candidates", id);
-                    const confRef = window.doc(window.db, "config", "utama"); // Referensi Agregator Pusat
-
+                    const voterRef = window.doc(window.db, "voters", ME.token); const candRef = id === 'ABSTAIN' ? null : window.doc(window.db, "candidates", id);
+                    const confRef = window.doc(window.db, "config", "utama"); 
                     await window.runTransaction(window.db, async (transaction) => { 
-                        const voterDoc = await transaction.get(voterRef); 
-                        if (!voterDoc.exists() || voterDoc.data().voted) { throw "Anda sudah memilih!"; } 
-                        
-                        const confDoc = await transaction.get(confRef); 
-                        let currVoted = (confDoc.exists() && confDoc.data().tot_voted) ? confDoc.data().tot_voted : 0;
-
-                        if (candRef) { 
-                            const candDoc = await transaction.get(candRef); 
-                            const newSuara = (candDoc.data().suara || 0) + 1; 
-                            transaction.update(candRef, { suara: newSuara }); 
-                        } 
-                        transaction.update(voterRef, { voted: true }); 
-                        transaction.update(confRef, { tot_voted: currVoted + 1 }); // +1 Suara Masuk di Pusat
+                        const voterDoc = await transaction.get(voterRef); if (!voterDoc.exists() || voterDoc.data().voted) { throw "Anda sudah memilih!"; } 
+                        const confDoc = await transaction.get(confRef); let currVoted = (confDoc.exists() && confDoc.data().tot_voted) ? confDoc.data().tot_voted : 0;
+                        if (candRef) { const candDoc = await transaction.get(candRef); const newSuara = (candDoc.data().suara || 0) + 1; transaction.update(candRef, { suara: newSuara }); } 
+                        transaction.update(voterRef, { voted: true }); transaction.update(confRef, { tot_voted: currVoted + 1 }); 
                     });
-                    ME.voted = true; localStorage.setItem('evote_session', JSON.stringify(ME)); refVoter(); 
-                    load(0); Swal.fire('Berhasil','Suara Anda telah masuk.','success');
+                    ME.voted = true; localStorage.setItem('evote_session', JSON.stringify(ME)); refVoter(); load(0); Swal.fire('Berhasil','Suara Anda telah masuk.','success');
                 } catch(e) { load(0); Swal.fire('Gagal', typeof e === 'string' ? e : e.message, 'error'); }
             }
         });
     }
 
     async function saveProfile(e) { 
-        e.preventDefault(); load(1); let passTxt = el('p-pass').value.trim(); 
-        const d = { tp_lahir: el('p-tpl').value, tg_lahir: el('p-tgl').value, alamat: el('p-alm').value, prov: el('p-prov').value, kab: el('p-kab').value, foto: el('p-b64').value }; 
-        try { 
-            if(passTxt !== "") d.pass = await makeHash(passTxt); 
-            await window.updateDoc(window.doc(window.db, "voters", ME.token), d); 
-            ME.data = { ...ME.data, ...d }; localStorage.setItem('evote_session',JSON.stringify(ME)); 
-            load(0); Swal.fire('Sukses','Data berhasil disimpan','success'); refVoter(); 
-        } catch(error) { load(0); Swal.fire('Gagal', error.message, 'error'); } 
+        e.preventDefault(); load(1); let passTxt = el('p-pass').value.trim(); const d = { tp_lahir: el('p-tpl').value, tg_lahir: el('p-tgl').value, alamat: el('p-alm').value, prov: el('p-prov').value, kab: el('p-kab').value, foto: el('p-b64').value }; 
+        try { if(passTxt !== "") d.pass = await makeHash(passTxt); await window.updateDoc(window.doc(window.db, "voters", ME.token), d); ME.data = { ...ME.data, ...d }; localStorage.setItem('evote_session',JSON.stringify(ME)); load(0); Swal.fire('Sukses','Data berhasil disimpan','success'); refVoter(); } catch(error) { load(0); Swal.fire('Gagal', error.message, 'error'); } 
     }
 
-    // --- LIVE COUNT TICK ---
-    // --- LIVE COUNT TICK (DENGAN AGREGATOR ANTI JEBOL) ---
+    // --- LIVE COUNT TICK (AGREGATOR & HEMAT KUOTA) ---
     async function tick() {
-        if (window.isTickRunning) return; 
-        window.isTickRunning = true;
-
+        if (window.isTickRunning) return; window.isTickRunning = true;
         try {
-            const confSnap = await window.getDoc(window.doc(window.db, "config", "utama"));
-            let c = confSnap.exists() ? confSnap.data() : {};
-            if (c.OrgFullName || c.OrgName) el('live-org').innerText = c.OrgFullName || c.OrgName; 
-            el('live-judul').innerText = c.Judul || 'LIVE COUNT';
+            const confSnap = await window.getDoc(window.doc(window.db, "config", "utama")); let c = confSnap.exists() ? confSnap.data() : {};
+            if (c.OrgFullName || c.OrgName) el('live-org').innerText = c.OrgFullName || c.OrgName; el('live-judul').innerText = c.Judul || 'LIVE COUNT';
             if (c.Logo) { el('live-logo').src = c.Logo; el('live-logo').style.display = 'block'; }
             START_TIME = c.StartTime_TS; END_TIME = c.EndTime_TS;
 
-            const candSnap = await window.getDocs(window.collection(window.db, "candidates"));
-            let cands = []; let totValid = 0;
-            candSnap.forEach(d => { let dx=d.data(); dx.id=d.id; cands.push(dx); totValid += (dx.suara || 0); });
-            GLOBAL_CANDS = cands; 
+            const candSnap = await window.getDocs(window.collection(window.db, "candidates")); let cands = []; let totValid = 0;
+            candSnap.forEach(d => { let dx=d.data(); dx.id=d.id; cands.push(dx); totValid += (dx.suara || 0); }); GLOBAL_CANDS = cands; 
 
-            // --- KODE AGREGATOR: CUKUP BACA BUKU PUSAT, HEMAT 1000 BACAAN! ---
-            let totVoters = c.tot_dpt || 0; 
-            let totVoted = c.tot_voted || 0;
-
-            el('s-masuk').innerText = totVoted; 
-            el('s-abstain').innerText = totVoted - totValid; 
-            el('s-belum').innerText = totVoters - totVoted; 
-            el('s-total').innerText = totVoters;
+            let totVoters = c.tot_dpt || 0; let totVoted = c.tot_voted || 0;
+            el('s-masuk').innerText = totVoted; el('s-abstain').innerText = totVoted - totValid; el('s-belum').innerText = totVoters - totVoted; el('s-total').innerText = totVoters;
 
             if (cands.length > 0) {
                 cands.sort((a, b) => { if (b.suara !== a.suara) return (b.suara||0) - (a.suara||0); return a.no - b.no; });
                 let h = ''; const topScore = cands[0].suara || 0; const winnersCount = cands.filter(x => x.suara === topScore && x.suara > 0).length;
                 cands.forEach((cand, i) => {
-                    let pct = totVoted > 0 ? ((cand.suara || 0) / totVoted * 100).toFixed(2) : 0;
-                    let cls = (i === 0 && cand.suara > 0) ? 'rank-1' : 'border-0'; let barW = (pct < 1 && cand.suara > 0) ? 1 : pct;
-                    let trophyHTML = (cand.suara === topScore && cand.suara > 0) ? `<i class="bi bi-trophy-fill ${winnersCount > 1 ? 'text-secondary' : 'text-warning'} ms-2 fs-4"></i>` : '';
-                    let fUrl = cand.foto || 'https://via.placeholder.com/60';
-                    h += `
-                    <div class="race-card ${cls} position-relative mb-3">
-                        <div class="fw-bold fs-3 text-secondary ms-2 text-center" style="min-width:40px">#${cand.no}</div>
-                        <img src="${fUrl}" class="cand-thumb shadow-sm" onerror="this.src='https://via.placeholder.com/60'">
-                        <div class="flex-fill">
-                            <div class="d-flex justify-content-between align-items-center mb-1">
-                                <div class="fw-bold fs-5 text-dark d-flex align-items-center">${cand.nama} ${trophyHTML}</div>
-                                <div class="fw-bold fs-4 text-dark">${cand.suara||0}</div>
-                            </div>
-                            <div class="progress" style="height:10px;background:#e2e8f0;border-radius:5px">
-                                <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" style="width:${barW}%"></div>
-                            </div>
-                            <div class="text-end small text-muted mt-1 fw-bold">${pct}% Suara</div>
-                        </div>
-                    </div>`;
-                });
-                el('race-area').innerHTML = h;
+                    let pct = totVoted > 0 ? ((cand.suara || 0) / totVoted * 100).toFixed(2) : 0; let cls = (i === 0 && cand.suara > 0) ? 'rank-1' : 'border-0'; let barW = (pct < 1 && cand.suara > 0) ? 1 : pct; let trophyHTML = (cand.suara === topScore && cand.suara > 0) ? `<i class="bi bi-trophy-fill ${winnersCount > 1 ? 'text-secondary' : 'text-warning'} ms-2 fs-4"></i>` : ''; let fUrl = cand.foto || 'https://via.placeholder.com/60';
+                    h += `<div class="race-card ${cls} position-relative mb-3"><div class="fw-bold fs-3 text-secondary ms-2 text-center" style="min-width:40px">#${cand.no}</div><img src="${fUrl}" class="cand-thumb shadow-sm" onerror="this.src='https://via.placeholder.com/60'"><div class="flex-fill"><div class="d-flex justify-content-between align-items-center mb-1"><div class="fw-bold fs-5 text-dark d-flex align-items-center">${cand.nama} ${trophyHTML}</div><div class="fw-bold fs-4 text-dark">${cand.suara||0}</div></div><div class="progress" style="height:10px;background:#e2e8f0;border-radius:5px"><div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" style="width:${barW}%"></div></div><div class="text-end small text-muted mt-1 fw-bold">${pct}% Suara</div></div></div>`;
+                }); el('race-area').innerHTML = h;
             } else { el('race-area').innerHTML = '<div class="text-center text-white py-5">Belum ada data kandidat.</div>'; }
 
             const now = new Date().getTime();
-            if (END_TIME && now >= END_TIME) {
-                if (POLL) { clearTimeout(POLL); clearInterval(POLL); }
-                el('live-final').style.display = 'none';
-                if (!window.shownResult) { showWinnerModal({c: GLOBAL_CANDS}); }
-            }
-
+            if (END_TIME && now >= END_TIME) { if (POLL) { clearTimeout(POLL); clearInterval(POLL); } el('live-final').style.display = 'none'; if (!window.shownResult) { showWinnerModal({c: GLOBAL_CANDS}); } }
         } catch (err) { 
-            console.error('Tick Error:', err); 
-            const now = new Date().getTime();
-            if (END_TIME && now >= END_TIME) {
-                if (POLL) { clearTimeout(POLL); clearInterval(POLL); }
-                el('live-final').style.display = 'none';
-                if (!window.shownResult) { showWinnerModal({c: GLOBAL_CANDS || []}); }
-            }
-        } finally {
-            window.isTickRunning = false;
-            updateTimer();
-        }
+            console.error('Tick Error:', err); const now = new Date().getTime();
+            if (END_TIME && now >= END_TIME) { if (POLL) { clearTimeout(POLL); clearInterval(POLL); } el('live-final').style.display = 'none'; if (!window.shownResult) { showWinnerModal({c: GLOBAL_CANDS || []}); } }
+        } finally { window.isTickRunning = false; updateTimer(); }
     }
 
-    // TIMERS & UI HELPERS
     function updateTimer() {
-        if(!START_TIME) return; const now = new Date().getTime(); const tm = el('timer-live'); if(!tm) return;
+        if(!START_TIME) return; const now = new Date().getTime(); const tm = el('timer-live'); const tmb = el('timer-live-bottom');
         
         if(now < START_TIME) { 
-            el('live-wait').classList.remove('d-none'); el('race-area').classList.add('d-none'); tm.classList.add('text-danger'); tm.innerText = formatTime(START_TIME - now); if(el('timer-live-wait')) el('timer-live-wait').innerText = formatTime(START_TIME - now); 
+            el('live-wait').classList.remove('d-none'); el('race-area').classList.add('d-none'); 
+            if(tm) { tm.classList.add('text-danger'); tm.innerText = formatTime(START_TIME - now); }
+            if(tmb) { tmb.classList.add('text-danger'); tmb.innerText = formatTime(START_TIME - now); }
+            if(el('timer-live-wait')) el('timer-live-wait').innerText = formatTime(START_TIME - now); 
         } 
         else if (END_TIME && now < END_TIME) { 
-            el('live-wait').classList.add('d-none'); el('race-area').classList.remove('d-none'); tm.classList.remove('text-danger'); tm.classList.add('text-success'); 
-            let timeLeft = END_TIME - now;
-            tm.innerText = formatTime(timeLeft); 
+            el('live-wait').classList.add('d-none'); el('race-area').classList.remove('d-none'); 
+            if(tm) { tm.classList.remove('text-danger'); tm.classList.add('text-success'); }
+            if(tmb) { tmb.classList.remove('text-danger'); tmb.classList.add('text-success'); }
             
-            // TURBO MODE (20 DETIK TERAKHIR)
+            let timeLeft = END_TIME - now; let txt = formatTime(timeLeft);
+            if(tm) tm.innerText = txt; if(tmb) tmb.innerText = txt; 
+            
             if (timeLeft <= 20000 && !window.fastPollActive) {
-                window.fastPollActive = true;
-                if(POLL) { clearTimeout(POLL); clearInterval(POLL); }
-                tick(); 
-                POLL = setInterval(() => { tick(); }, 2000); 
+                window.fastPollActive = true; if(POLL) { clearTimeout(POLL); clearInterval(POLL); } tick(); POLL = setInterval(() => { tick(); }, 2000); 
             }
         } 
         else if (END_TIME && now >= END_TIME) { 
-            tm.innerText = "WAKTU HABIS"; tm.classList.add('text-danger'); 
-            if(!isEnded) { 
-                isEnded = true; 
-                if(POLL) { clearTimeout(POLL); clearInterval(POLL); } 
-                el('live-final').style.display = 'flex'; 
-                setTimeout(() => { tick(); }, 500); 
-            } 
+            if(tm) { tm.innerText = "WAKTU HABIS"; tm.classList.add('text-danger'); }
+            if(tmb) { tmb.innerText = "WAKTU HABIS"; tmb.classList.add('text-danger'); }
+            if(!isEnded) { isEnded = true; if(POLL) { clearTimeout(POLL); clearInterval(POLL); } el('live-final').style.display = 'flex'; setTimeout(() => { tick(); }, 500); } 
         } 
-        else { tm.innerText = "BERLANGSUNG"; if(!isStarted) { isStarted=true; tick(); } }
+        else { 
+            if(tm) tm.innerText = "BERLANGSUNG"; if(tmb) tmb.innerText = "BERLANGSUNG"; 
+            if(!isStarted) { isStarted=true; tick(); } 
+        }
     }
 
     function showWinnerModal(d) {
@@ -1283,20 +1135,14 @@
         
         const winners = d.c.filter(x => x.suara === topScore);
         if (winners.length > 1) {
-            let drawListHTML = ''; 
-            winners.forEach(w => { 
-                let fUrl = w.foto || 'https://via.placeholder.com/50';
-                drawListHTML += `<div class="d-flex align-items-center gap-3 border p-2 rounded mb-2 bg-white shadow-sm"><img src="${fUrl}" class="rounded-circle border" style="width:50px;height:50px;object-fit:cover"><div class="fw-bold text-dark text-start flex-fill">${w.nama}<div class="small text-muted">No: ${w.no}</div></div><div class="fw-bold fs-5 text-secondary">${w.suara}</div></div>`; 
-            });
+            let drawListHTML = ''; winners.forEach(w => { let fUrl = w.foto || 'https://via.placeholder.com/50'; drawListHTML += `<div class="d-flex align-items-center gap-3 border p-2 rounded mb-2 bg-white shadow-sm"><img src="${fUrl}" class="rounded-circle border" style="width:50px;height:50px;object-fit:cover"><div class="fw-bold text-dark text-start flex-fill">${w.nama}<div class="small text-muted">No: ${w.no}</div></div><div class="fw-bold fs-5 text-secondary">${w.suara}</div></div>`; });
             el('draw-list').innerHTML = drawListHTML; el('draw-score').innerText = topScore; new bootstrap.Modal('#mDraw').show();
-        } else {
-            const winner = winners[0]; el('win-img').src = winner.foto||'https://via.placeholder.com/150'; el('win-name').innerText = winner.nama; el('win-score').innerText = winner.suara; new bootstrap.Modal('#mWin').show();
-        }
+        } else { const winner = winners[0]; el('win-img').src = winner.foto||'https://via.placeholder.com/150'; el('win-name').innerText = winner.nama; el('win-score').innerText = winner.suara; new bootstrap.Modal('#mWin').show(); }
     }
 
     function togglePass(id) { const i=el(id),c=el('icon-'+id); if(i.type==="password"){ i.type="text"; c.classList.remove('bi-eye-slash'); c.classList.add('bi-eye'); } else { i.type="password"; c.classList.remove('bi-eye'); c.classList.add('bi-eye-slash'); } }
     function formatTime(ms) { if(ms<0) return "00:00:00"; const h=Math.floor((ms%(1000*60*60*24))/(1000*60*60)); const m=Math.floor((ms%(1000*60*60))/(1000*60)); const s=Math.floor((ms%(1000*60))/1000); return `${h}j ${m}m ${s}d`; }
-    function toggleMenu() { const sb=el('sb'), sbV=el('sb-voter'), over=el('sidebar-overlay'); if(sb){ sb.classList.toggle('show'); if(sb.classList.contains('show')) over.classList.add('show'); else over.classList.remove('show'); } if(sbV){ sbV.classList.toggle('show'); if(sbV.classList.contains('show')) over.classList.add('show'); else over.classList.remove('show'); } }
+    function toggleMenu() { const sb=el('sb'), over=el('sidebar-overlay'); if(sb){ sb.classList.toggle('show'); if(sb.classList.contains('show')) over.classList.add('show'); else over.classList.remove('show'); } }
     window.onscroll = () => { const btn = el('btn-scroll-top'); if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) btn.style.display = "flex"; else btn.style.display = "none"; };
     
     function nav(id) {
@@ -1304,101 +1150,27 @@
       if(POLL) { clearTimeout(POLL); clearInterval(POLL); }
       if(id=='live') { 
           isEnded = false; isStarted = false; window.fastPollActive = false; window.shownResult = false; 
-          tick(); 
-          const loopTick = () => { const t=Math.floor(Math.random()*5000)+20000; POLL=setTimeout(()=>{tick();loopTick();},t); }; loopTick(); 
+          tick(); updateLiveAuthBtn(); // Panggil fungsi ubah tombol Login/Logout khusus HP
+          
+          if (ME && ME.role === 'admin') {
+              const loopTick = () => { const t=Math.floor(Math.random()*5000)+20000; POLL=setTimeout(()=>{tick();loopTick();},t); }; loopTick(); 
+          }
           if(window.TIMER_INT) clearInterval(window.TIMER_INT); window.TIMER_INT = setInterval(updateTimer, 1000); 
       }
     }
 
-    // MODAL, WILAYAH, CROPPER
-    function mdlCand(id){ 
-        let c = id ? GLOBAL_CANDS.find(x => x.id === id) : null;
-        el('cid').value = c?c.id:''; el('cno').value = c?c.no:''; el('cnm').value = c?c.nama:''; el('cnia').value = c?c.nia||'':''; el('ctpl').value = c?c.tp_lahir||'':''; el('ctgl').value = c?c.tg_lahir||'':''; el('cjk').value = c?c.jk||'L':'L'; el('calm').value = c?c.alamat||'':''; el('cvis').value = c?c.visi||'':''; el('cmis').value = c?c.misi||'':''; el('cfo').value = c?c.foto||'':''; el('cfn').value = ''; 
-        if(c&&c.foto){ el('cpr').src=c.foto; el('cpr').style.display='block'; el('cpt').style.display='none'; } else { el('cpr').style.display='none'; el('cpt').style.display='block'; } 
-        new bootstrap.Modal('#mCand').show(); 
-    }
-    
-    function mdlVoter(id){ 
-        let v = id ? ALL_VOTERS.find(x => x.user === id) : null;
-        el('vu').value = v?v.user:''; el('vu').readOnly = !!v; el('vp').value = ''; el('vnm').value = v?v.nama||'':''; el('vnia').value = v?v.nia||'':''; el('vtpl').value = v?v.tp_lahir||'':''; el('vtgl').value = v?v.tg_lahir||'':''; el('vjk').value = v?v.jk||'L':'L'; el('valm').value = v?v.alamat||'':''; 
-        el('vprv').innerHTML='<option value="">Pilih Provinsi</option>'; for(let k in WIL) el('vprv').innerHTML += `<option value="${k}">${k}</option>`; el('vprv').value = v?v.prov||'':''; ldKab(); if(v) el('vkb').value = v.kab||''; el('vfo').value = v?v.foto||'':''; el('vfn').value = ''; 
-        if(v&&v.foto){ el('vpr').src=v.foto; el('vpr').style.display='block'; el('vpt').style.display='none'; } else { el('vpr').style.display='none'; el('vpt').style.display='block'; } 
-        new bootstrap.Modal('#mVoter').show(); 
-    }
-
+    function mdlCand(id){ let c = id ? GLOBAL_CANDS.find(x => x.id === id) : null; el('cid').value = c?c.id:''; el('cno').value = c?c.no:''; el('cnm').value = c?c.nama:''; el('cnia').value = c?c.nia||'':''; el('ctpl').value = c?c.tp_lahir||'':''; el('ctgl').value = c?c.tg_lahir||'':''; el('cjk').value = c?c.jk||'L':'L'; el('calm').value = c?c.alamat||'':''; el('cvis').value = c?c.visi||'':''; el('cmis').value = c?c.misi||'':''; el('cfo').value = c?c.foto||'':''; el('cfn').value = ''; if(c&&c.foto){ el('cpr').src=c.foto; el('cpr').style.display='block'; el('cpt').style.display='none'; } else { el('cpr').style.display='none'; el('cpt').style.display='block'; } new bootstrap.Modal('#mCand').show(); }
+    function mdlVoter(id){ let v = id ? ALL_VOTERS.find(x => x.user === id) : null; el('vu').value = v?v.user:''; el('vu').readOnly = !!v; el('vp').value = ''; el('vnm').value = v?v.nama||'':''; el('vnia').value = v?v.nia||'':''; el('vtpl').value = v?v.tp_lahir||'':''; el('vtgl').value = v?v.tg_lahir||'':''; el('vjk').value = v?v.jk||'L':'L'; el('valm').value = v?v.alamat||'':''; el('vprv').innerHTML='<option value="">Pilih Provinsi</option>'; for(let k in WIL) el('vprv').innerHTML += `<option value="${k}">${k}</option>`; el('vprv').value = v?v.prov||'':''; ldKab(); if(v) el('vkb').value = v.kab||''; el('vfo').value = v?v.foto||'':''; el('vfn').value = ''; if(v&&v.foto){ el('vpr').src=v.foto; el('vpr').style.display='block'; el('vpt').style.display='none'; } else { el('vpr').style.display='none'; el('vpt').style.display='block'; } new bootstrap.Modal('#mVoter').show(); }
     function ldKab(){ let p = el('vprv').value; let k = el('vkb'); k.innerHTML='<option value="">Pilih Kab/Kota</option>'; if(WIL[p]) WIL[p].sort().forEach(x=>k.innerHTML+=`<option value="${x}">${x}</option>`); }
     function ldKabProf(defaultVal = null) { let p = el('p-prov').value; let k = el('p-kab'); k.innerHTML = '<option value="">Pilih Kab/Kota</option>'; if(p && WIL[p]) { WIL[p].sort().forEach(x => { k.innerHTML += `<option value="${x}">${x}</option>`; }); } if (defaultVal) { k.value = defaultVal; } }
-    
-    function viewCandProfile(id) { 
-        let d = GLOBAL_CANDS.find(x => x.id === id);
-        if(!d) return;
-        let fUrl = d.foto || 'https://via.placeholder.com/150';
-        let h = `
-        <div class="text-center mb-3"><h5 class="fw-bold text-primary">DETAIL KANDIDAT NO. ${d.no}</h5></div>
-        <div class="text-center mb-4"><img src="${fUrl}" class="shadow rounded border" style="width:160px;height:220px;object-fit:cover" onerror="this.src='https://via.placeholder.com/150'"></div>
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped align-middle small">
-                <tr><th width="35%" class="bg-light">Nama Lengkap</th><td class="fw-bold">${d.nama}</td></tr>
-                <tr><th class="bg-light">NIA</th><td>${d.nia||'-'}</td></tr>
-                <tr><th class="bg-light">TTL</th><td>${d.tp_lahir||'-'}, ${d.tg_lahir||'-'}</td></tr>
-                <tr><th class="bg-light">Jenis Kelamin</th><td>${d.jk==='L'?'Laki-Laki':'Perempuan'}</td></tr>
-                <tr><th class="bg-light">Visi</th><td>${d.visi||'-'}</td></tr>
-                <tr><th class="bg-light">Misi</th><td>${d.misi ? d.misi.replace(/\n/g, '<br>') : '-'}</td></tr>
-            </table>
-        </div>`; 
-        el('viewBody').innerHTML = h; new bootstrap.Modal('#mView').show(); 
-    }
-    
+    function viewCandProfile(id) { let d = GLOBAL_CANDS.find(x => x.id === id); if(!d) return; let fUrl = d.foto || 'https://via.placeholder.com/150'; let h = `<div class="text-center mb-3"><h5 class="fw-bold text-primary">DETAIL KANDIDAT NO. ${d.no}</h5></div><div class="text-center mb-4"><img src="${fUrl}" class="shadow rounded border" style="width:160px;height:220px;object-fit:cover" onerror="this.src='https://via.placeholder.com/150'"></div><div class="table-responsive"><table class="table table-bordered table-striped align-middle small"><tr><th width="35%" class="bg-light">Nama Lengkap</th><td class="fw-bold">${d.nama}</td></tr><tr><th class="bg-light">NIA</th><td>${d.nia||'-'}</td></tr><tr><th class="bg-light">TTL</th><td>${d.tp_lahir||'-'}, ${d.tg_lahir||'-'}</td></tr><tr><th class="bg-light">Jenis Kelamin</th><td>${d.jk==='L'?'Laki-Laki':'Perempuan'}</td></tr><tr><th class="bg-light">Visi</th><td>${d.visi||'-'}</td></tr><tr><th class="bg-light">Misi</th><td>${d.misi ? d.misi.replace(/\n/g, '<br>') : '-'}</td></tr></table></div>`; el('viewBody').innerHTML = h; new bootstrap.Modal('#mView').show(); }
     function initCrop(i,t){ if(i.files[0]){ TGT=t; const r=new FileReader(); r.onload=e=>{ el('img-crop').src = e.target.result; new bootstrap.Modal('#mCrop').show(); if(CROP){ CROP.destroy(); CROP=null; } setTimeout(()=>{ CROP=new Cropper(el('img-crop'),{aspectRatio:t=='logo'?1:0.75,viewMode:1,autoCropArea:1}); },300); }; r.readAsDataURL(i.files[0]); } }
-    
-    function doCrop(){ 
-        if(!CROP) return; const w=TGT=='logo'?150:300, h=TGT=='logo'?150:400; let b64; 
-        if(TGT=='logo') b64=CROP.getCroppedCanvas({width:w,height:h}).toDataURL('image/png'); else b64=CROP.getCroppedCanvas({width:w,height:h,fillColor:'#fff'}).toDataURL('image/jpeg',0.6); 
-        if(TGT=='logo'){ el('logoNew').value=b64; el('logoPrev').src=b64; el('logoPrev').style.display='block'; el('logoTxt').style.display='none'; } 
-        else if(TGT=='p'){ el('p-b64').value=b64; el('p-img').src=b64; el('p-img').style.display='block'; el('p-txt').style.display='none'; } 
-        else if(TGT=='c'){ el('cfn').value=b64; el('cpr').src=b64; el('cpr').style.display='block'; el('cpt').style.display='none'; } 
-        else if(TGT=='v'){ el('vfn').value=b64; el('vpr').src=b64; el('vpr').style.display='block'; el('vpt').style.display='none'; } 
-        bootstrap.Modal.getInstance(el('mCrop')).hide(); 
-    }
+    function doCrop(){ if(!CROP) return; const w=TGT=='logo'?150:300, h=TGT=='logo'?150:400; let b64; if(TGT=='logo') b64=CROP.getCroppedCanvas({width:w,height:h}).toDataURL('image/png'); else b64=CROP.getCroppedCanvas({width:w,height:h,fillColor:'#fff'}).toDataURL('image/jpeg',0.6); if(TGT=='logo'){ el('logoNew').value=b64; el('logoPrev').src=b64; el('logoPrev').style.display='block'; el('logoTxt').style.display='none'; } else if(TGT=='p'){ el('p-b64').value=b64; el('p-img').src=b64; el('p-img').style.display='block'; el('p-txt').style.display='none'; } else if(TGT=='c'){ el('cfn').value=b64; el('cpr').src=b64; el('cpr').style.display='block'; el('cpt').style.display='none'; } else if(TGT=='v'){ el('vfn').value=b64; el('vpr').src=b64; el('vpr').style.display='block'; el('vpt').style.display='none'; } bootstrap.Modal.getInstance(el('mCrop')).hide(); }
 
-    // --- FITUR CETAK PDF ---
-    async function execPdf(htmlContent, filename) {
-        load(1);
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = htmlContent;
-        const opt = { margin: 0.5, filename: filename, image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true, logging: false }, jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' } };
-        await html2pdf().set(opt).from(tempDiv).save();
-        load(0);
-    }
-    
-    function dlCard(username) {
-        const u = ALL_VOTERS.find(x => x.user === username) || ME.data;
-        if(!u) return Swal.fire('Error', 'Data pemilih tidak ditemukan', 'error');
-        const c = GLOBAL_CONFIG;
-        let fUrl = u.foto || 'https://via.placeholder.com/150';
-        let html = `<div style="font-family:'Helvetica',sans-serif; margin:0; padding:20px;"><div style="width:550px; height:350px; padding:15px; border:2px solid #333; border-radius:10px; position:relative; overflow:hidden; background:#fff;"><div style="border-bottom:2px solid #000; padding-bottom:10px; display:flex; align-items:center; gap:10px;">${c.Logo ? `<img src="${c.Logo}" style="width:60px; height:60px; object-fit:contain;">` : ''}<div style="flex:1; text-align:center;"><h2 style="margin:0; font-size:14px; text-transform:uppercase;">${c.OrgFullName||'ORGANISASI'}</h2><h1 style="margin:0; font-size:16px; text-transform:uppercase;">${c.OrgName||''}</h1><p style="margin:2px 0 0; font-size:10px;">${c.OrgAddress||''}</p></div></div><div style="text-align:center; margin:10px 0; font-weight:bold; font-size:14px; text-decoration:underline;">KARTU PESERTA PEMILIH</div><div style="display:flex; gap:15px; margin-top:10px; align-items:center;"><div style="width:100px; height:130px; border:1px solid #ddd; padding:3px; background:#fff; display:flex; justify-content:center; overflow:hidden;"><img src="${fUrl}" style="width:100%; height:100%; object-fit:cover;"></div><div style="flex:1; font-size:12px;"><table style="width:100%; border-collapse:collapse;"><tr><td width="30%" style="padding:3px 0;"><b>Nama</b></td><td>: ${u.nama||'-'}</td></tr><tr><td style="padding:3px 0;"><b>ID/NIA</b></td><td>: ${u.user||'-'}</td></tr><tr><td style="padding:3px 0;"><b>TTL</b></td><td>: ${u.tp_lahir||'-'}, ${u.tg_lahir||'-'}</td></tr><tr><td style="padding:3px 0;"><b>Wilayah</b></td><td>: ${u.kab||'-'}, ${u.prov||'-'}</td></tr></table></div></div><div style="position:absolute; bottom:0; left:0; right:0; background:#f1f5f9; padding:8px; font-size:10px; text-align:center; border-top:1px solid #ddd;">Kartu ini adalah bukti sah sebagai pemilih pada ${c.Judul||'Pemilihan'}.</div></div></div>`;
-        execPdf(html, `Kartu_${username}.pdf`);
-    }
-    
-    function dlPdf() {
-        const c = GLOBAL_CONFIG; const s = c.stats || {}; const cands = GLOBAL_CANDS || [];
-        let dateStr = new Date().toLocaleString('id-ID');
-        let html = `<div style="font-family:sans-serif; padding:20px;"><div style="text-align:center; border-bottom:2px solid #000; padding-bottom:10px; margin-bottom:20px;">${c.Logo ? `<img src="${c.Logo}" style="width:80px;height:80px;object-fit:contain;"><br>` : ''}<h3 style="margin:2px 0;">${c.OrgFullName||'ORGANISASI'}</h3><h2 style="margin:2px 0;">${c.OrgName||''}</h2></div><h3 style="text-align:center;">${c.Judul||'LAPORAN HASIL PEMILIHAN'}</h3><div style="margin-bottom:20px; font-size:12px;"><b>Waktu Cetak:</b> ${dateStr}<br><b>Total DPT:</b> ${s.tot||0} Pemilih</div><h4>A. PEROLEHAN SUARA KANDIDAT</h4><table style="width:100%; border-collapse:collapse; margin-top:10px; font-size:12px;"><thead><tr><th style="border:1px solid #000; padding:6px; background:#f0f0f0;">No</th><th style="border:1px solid #000; padding:6px; background:#f0f0f0;">Nama Kandidat</th><th style="border:1px solid #000; padding:6px; background:#f0f0f0;">Jumlah Suara</th><th style="border:1px solid #000; padding:6px; background:#f0f0f0;">Persentase</th></tr></thead><tbody>`;
-        cands.forEach(cand => { let pct = s.vot > 0 ? ((cand.suara/s.vot)*100).toFixed(2) : 0; html += `<tr><td style="border:1px solid #000; padding:6px; text-align:center;">${cand.no}</td><td style="border:1px solid #000; padding:6px;">${cand.nama}</td><td style="border:1px solid #000; padding:6px; text-align:center;"><b>${cand.suara||0}</b></td><td style="border:1px solid #000; padding:6px; text-align:center;">${pct}%</td></tr>`; });
-        html += `</tbody></table><div style="page-break-inside: avoid; margin-top:30px;"><h4>B. REKAPITULASI SUARA</h4><table style="width:100%; border-collapse:collapse; font-size:12px;"><tr><td style="border:1px solid #000; padding:6px; width:75%;">Total Suara Sah</td><td style="border:1px solid #000; padding:6px; text-align:center;">${s.valid||0}</td></tr><tr><td style="border:1px solid #000; padding:6px;">Total Abstain</td><td style="border:1px solid #000; padding:6px; text-align:center;">${s.abstain||0}</td></tr><tr style="background:#eee;"><td style="border:1px solid #000; padding:6px;"><b>TOTAL SUARA MASUK</b></td><td style="border:1px solid #000; padding:6px; text-align:center;"><b>${s.vot||0}</b></td></tr><tr><td style="border:1px solid #000; padding:6px;">Belum Memilih</td><td style="border:1px solid #000; padding:6px; text-align:center;">${s.belum||0}</td></tr></table></div></div>`;
-        execPdf(html, 'Laporan_Resmi.pdf');
-    }
-    
-    function dlCandPdf() {
-        const c = GLOBAL_CONFIG; const cands = GLOBAL_CANDS || [];
-        let html = `<div style="font-family:sans-serif; padding:20px;"><div style="text-align:center; border-bottom:2px solid #000; padding-bottom:10px; margin-bottom:20px;">${c.Logo ? `<img src="${c.Logo}" style="width:80px;height:80px;object-fit:contain;"><br>` : ''}<h3 style="margin:2px 0;">${c.OrgFullName||'ORGANISASI'}</h3><h2 style="margin:2px 0;">${c.OrgName||''}</h2></div><h3 style="text-align:center;">DAFTAR KANDIDAT</h3>`;
-        cands.forEach(cand => { 
-            let fUrl = cand.foto || 'https://via.placeholder.com/150';
-            html += `<div style="border:1px solid #000; padding:15px; margin-bottom:15px; page-break-inside:avoid;"><table width="100%"><tr><td width="120" style="vertical-align:top;"><img src="${fUrl}" style="width:100px;height:130px;object-fit:cover;border:1px solid #ccc;"><h2 style="text-align:center;margin:5px 0;">NO: ${cand.no}</h2></td><td style="vertical-align:top;padding-left:15px;"><h3>${cand.nama}</h3><p><b>NIA:</b> ${cand.nia||'-'}<br><b>TTL:</b> ${cand.tp_lahir||'-'}, ${cand.tg_lahir||'-'}</p><hr><div style="text-decoration:underline;font-weight:bold;margin-bottom:5px;">VISI:</div><p>${cand.visi||'-'}</p><div style="text-decoration:underline;font-weight:bold;margin-bottom:5px;">MISI:</div><p>${cand.misi||'-'}</p></td></tr></table></div>`; 
-        });
-        html += `</div>`;
-        execPdf(html, 'Data_Kandidat.pdf');
-    }
+    async function execPdf(htmlContent, filename) { load(1); const tempDiv = document.createElement('div'); tempDiv.innerHTML = htmlContent; const opt = { margin: 0.5, filename: filename, image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true, logging: false }, jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' } }; await html2pdf().set(opt).from(tempDiv).save(); load(0); }
+    function dlCard(username) { const u = ALL_VOTERS.find(x => x.user === username) || ME.data; if(!u) return Swal.fire('Error', 'Data pemilih tidak ditemukan', 'error'); const c = GLOBAL_CONFIG; let fUrl = u.foto || 'https://via.placeholder.com/150'; let html = `<div style="font-family:'Helvetica',sans-serif; margin:0; padding:20px;"><div style="width:550px; height:350px; padding:15px; border:2px solid #333; border-radius:10px; position:relative; overflow:hidden; background:#fff;"><div style="border-bottom:2px solid #000; padding-bottom:10px; display:flex; align-items:center; gap:10px;">${c.Logo ? `<img src="${c.Logo}" style="width:60px; height:60px; object-fit:contain;">` : ''}<div style="flex:1; text-align:center;"><h2 style="margin:0; font-size:14px; text-transform:uppercase;">${c.OrgFullName||'ORGANISASI'}</h2><h1 style="margin:0; font-size:16px; text-transform:uppercase;">${c.OrgName||''}</h1><p style="margin:2px 0 0; font-size:10px;">${c.OrgAddress||''}</p></div></div><div style="text-align:center; margin:10px 0; font-weight:bold; font-size:14px; text-decoration:underline;">KARTU PESERTA PEMILIH</div><div style="display:flex; gap:15px; margin-top:10px; align-items:center;"><div style="width:100px; height:130px; border:1px solid #ddd; padding:3px; background:#fff; display:flex; justify-content:center; overflow:hidden;"><img src="${fUrl}" style="width:100%; height:100%; object-fit:cover;"></div><div style="flex:1; font-size:12px;"><table style="width:100%; border-collapse:collapse;"><tr><td width="30%" style="padding:3px 0;"><b>Nama</b></td><td>: ${u.nama||'-'}</td></tr><tr><td style="padding:3px 0;"><b>ID/NIA</b></td><td>: ${u.user||'-'}</td></tr><tr><td style="padding:3px 0;"><b>TTL</b></td><td>: ${u.tp_lahir||'-'}, ${u.tg_lahir||'-'}</td></tr><tr><td style="padding:3px 0;"><b>Wilayah</b></td><td>: ${u.kab||'-'}, ${u.prov||'-'}</td></tr></table></div></div><div style="position:absolute; bottom:0; left:0; right:0; background:#f1f5f9; padding:8px; font-size:10px; text-align:center; border-top:1px solid #ddd;">Kartu ini adalah bukti sah sebagai pemilih pada ${c.Judul||'Pemilihan'}.</div></div></div>`; execPdf(html, `Kartu_${username}.pdf`); }
+    function dlPdf() { const c = GLOBAL_CONFIG; const s = c.stats || {}; const cands = GLOBAL_CANDS || []; let dateStr = new Date().toLocaleString('id-ID'); let html = `<div style="font-family:sans-serif; padding:20px;"><div style="text-align:center; border-bottom:2px solid #000; padding-bottom:10px; margin-bottom:20px;">${c.Logo ? `<img src="${c.Logo}" style="width:80px;height:80px;object-fit:contain;"><br>` : ''}<h3 style="margin:2px 0;">${c.OrgFullName||'ORGANISASI'}</h3><h2 style="margin:2px 0;">${c.OrgName||''}</h2></div><h3 style="text-align:center;">${c.Judul||'LAPORAN HASIL PEMILIHAN'}</h3><div style="margin-bottom:20px; font-size:12px;"><b>Waktu Cetak:</b> ${dateStr}<br><b>Total DPT:</b> ${s.tot||0} Pemilih</div><h4>A. PEROLEHAN SUARA KANDIDAT</h4><table style="width:100%; border-collapse:collapse; margin-top:10px; font-size:12px;"><thead><tr><th style="border:1px solid #000; padding:6px; background:#f0f0f0;">No</th><th style="border:1px solid #000; padding:6px; background:#f0f0f0;">Nama Kandidat</th><th style="border:1px solid #000; padding:6px; background:#f0f0f0;">Jumlah Suara</th><th style="border:1px solid #000; padding:6px; background:#f0f0f0;">Persentase</th></tr></thead><tbody>`; cands.forEach(cand => { let pct = s.vot > 0 ? ((cand.suara/s.vot)*100).toFixed(2) : 0; html += `<tr><td style="border:1px solid #000; padding:6px; text-align:center;">${cand.no}</td><td style="border:1px solid #000; padding:6px;">${cand.nama}</td><td style="border:1px solid #000; padding:6px; text-align:center;"><b>${cand.suara||0}</b></td><td style="border:1px solid #000; padding:6px; text-align:center;">${pct}%</td></tr>`; }); html += `</tbody></table><div style="page-break-inside: avoid; margin-top:30px;"><h4>B. REKAPITULASI SUARA</h4><table style="width:100%; border-collapse:collapse; font-size:12px;"><tr><td style="border:1px solid #000; padding:6px; width:75%;">Total Suara Sah</td><td style="border:1px solid #000; padding:6px; text-align:center;">${s.valid||0}</td></tr><tr><td style="border:1px solid #000; padding:6px;">Total Abstain</td><td style="border:1px solid #000; padding:6px; text-align:center;">${s.abstain||0}</td></tr><tr style="background:#eee;"><td style="border:1px solid #000; padding:6px;"><b>TOTAL SUARA MASUK</b></td><td style="border:1px solid #000; padding:6px; text-align:center;"><b>${s.vot||0}</b></td></tr><tr><td style="border:1px solid #000; padding:6px;">Belum Memilih</td><td style="border:1px solid #000; padding:6px; text-align:center;">${s.belum||0}</td></tr></table></div></div>`; execPdf(html, 'Laporan_Resmi.pdf'); }
+    function dlCandPdf() { const c = GLOBAL_CONFIG; const cands = GLOBAL_CANDS || []; let html = `<div style="font-family:sans-serif; padding:20px;"><div style="text-align:center; border-bottom:2px solid #000; padding-bottom:10px; margin-bottom:20px;">${c.Logo ? `<img src="${c.Logo}" style="width:80px;height:80px;object-fit:contain;"><br>` : ''}<h3 style="margin:2px 0;">${c.OrgFullName||'ORGANISASI'}</h3><h2 style="margin:2px 0;">${c.OrgName||''}</h2></div><h3 style="text-align:center;">DAFTAR KANDIDAT</h3>`; cands.forEach(cand => { let fUrl = cand.foto || 'https://via.placeholder.com/150'; html += `<div style="border:1px solid #000; padding:15px; margin-bottom:15px; page-break-inside:avoid;"><table width="100%"><tr><td width="120" style="vertical-align:top;"><img src="${fUrl}" style="width:100px;height:130px;object-fit:cover;border:1px solid #ccc;"><h2 style="text-align:center;margin:5px 0;">NO: ${cand.no}</h2></td><td style="vertical-align:top;padding-left:15px;"><h3>${cand.nama}</h3><p><b>NIA:</b> ${cand.nia||'-'}<br><b>TTL:</b> ${cand.tp_lahir||'-'}, ${cand.tg_lahir||'-'}</p><hr><div style="text-decoration:underline;font-weight:bold;margin-bottom:5px;">VISI:</div><p>${cand.visi||'-'}</p><div style="text-decoration:underline;font-weight:bold;margin-bottom:5px;">MISI:</div><p>${cand.misi||'-'}</p></td></tr></table></div>`; }); html += `</div>`; execPdf(html, 'Data_Kandidat.pdf'); }
   </script>
 </body>
 </html>
