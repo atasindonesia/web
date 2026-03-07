@@ -1283,35 +1283,38 @@
     function doCrop(){ if(!CROP) return; const w=TGT=='logo'?150:300, h=TGT=='logo'?150:400; let b64; if(TGT=='logo') b64=CROP.getCroppedCanvas({width:w,height:h}).toDataURL('image/png'); else b64=CROP.getCroppedCanvas({width:w,height:h,fillColor:'#fff'}).toDataURL('image/jpeg',0.6); if(TGT=='logo'){ el('logoNew').value=b64; el('logoPrev').src=b64; el('logoPrev').style.display='block'; el('logoTxt').style.display='none'; } else if(TGT=='p'){ el('p-b64').value=b64; el('p-img').src=b64; el('p-img').style.display='block'; el('p-txt').style.display='none'; } else if(TGT=='c'){ el('cfn').value=b64; el('cpr').src=b64; el('cpr').style.display='block'; el('cpt').style.display='none'; } else if(TGT=='v'){ el('vfn').value=b64; el('vpr').src=b64; el('vpr').style.display='block'; el('vpt').style.display='none'; } bootstrap.Modal.getInstance(el('mCrop')).hide(); }
 
    function execPdf(htmlContent, filename) { 
-        load(1); 
+        load(1); // Menyalakan Layar Loading (z-index: 99999)
         
-        // 1. Buat elemen fisik sementara agar mesin PDF tidak bingung
+        // 1. Buat elemen cetakan di posisi paling atas
         let tempDiv = document.createElement('div');
         tempDiv.innerHTML = htmlContent;
         tempDiv.style.position = 'absolute';
-        tempDiv.style.left = '0px';
         tempDiv.style.top = '0px';
+        tempDiv.style.left = '0px';
         tempDiv.style.width = '800px';
-        tempDiv.style.zIndex = '-1000'; // Ditumpuk di belakang layar agar tidak kelihatan user
         tempDiv.style.background = '#ffffff';
+        // 2. KUNCI UTAMA: Taruh di z-index 99990.
+        // Artinya elemen ini ADA DI ATAS semua konten web, TAPI DI BAWAH layar Loading.
+        // Jadi mesin PDF bisa melihatnya dengan jelas, tapi mata user tidak.
+        tempDiv.style.zIndex = '99990'; 
         document.body.appendChild(tempDiv);
         
-        // 2. Beri jeda 1.5 detik (1500ms). Ini KUNCI agar foto/logo selesai di-render sebelum dipotret!
+        // 3. Tahan nafas 1,5 detik agar foto & logo dari internet termuat sempurna
         setTimeout(() => {
             const opt = { 
                 margin: 0.5, 
                 filename: filename, 
                 image: { type: 'jpeg', quality: 0.98 }, 
-                // allowTaint: true memaksa PDF membaca gambar beda server
-                html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false }, 
+                // KUNCI KEDUA: scrollY: 0 memastikan jepretan selalu dimulai dari ujung atas. Anti blank!
+                html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false, scrollY: 0 }, 
                 jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' } 
             }; 
             
-            // 3. Eksekusi PDF dari elemen sementara
+            // 4. Jepret dan Save!
             html2pdf().set(opt).from(tempDiv).save().then(() => {
-                // 4. Buang elemen sementara agar memori HP tidak berat
+                // Buang elemen sementara agar memori HP/PC lega kembali
                 document.body.removeChild(tempDiv);
-                load(0); 
+                load(0); // Matikan layar loading
             }).catch(err => {
                 console.error("PDF Error: ", err);
                 document.body.removeChild(tempDiv);
