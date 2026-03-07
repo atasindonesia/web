@@ -9,11 +9,84 @@
         body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
         iframe { width: 100%; height: 100%; border: none; }
     </style>
+
+    <style>
+  /* Matikan Popup Cookies Tema */
+  #cookies-iki { display: none !important; }
+
+  /* Desain Banner */
+  #smart-app-banner {
+    position: fixed;
+    bottom: -150px; 
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    z-index: 2147483647; /* Z-index paling mentok di dunia web */
+    transition: bottom 0.5s ease-out;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+  
+  #smart-app-banner.show-banner {
+    bottom: 0; 
+  }
+  
+  .app-banner-left { display: flex; align-items: center; gap: 12px; }
+  
+  .app-banner-icon {
+    width: 45px; height: 45px;
+    border-radius: 10px; object-fit: cover;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .app-banner-info { display: flex; flex-direction: column; }
+  
+  .app-banner-title {
+    font-size: 15px; font-weight: 700; color: #111; margin: 0 0 2px 0; line-height: 1.2;
+  }
+  
+  .app-banner-desc { font-size: 12px; color: #666; margin: 0; font-weight: 500; }
+  
+  .app-banner-right { display: flex; align-items: center; gap: 15px; }
+  
+  .app-banner-btn {
+    background: #01875f; color: #ffffff !important;
+    font-weight: bold; font-size: 13px; padding: 7px 18px;
+    border-radius: 20px; text-decoration: none;
+    box-shadow: 0 2px 6px rgba(1, 135, 95, 0.4);
+    letter-spacing: 0.5px;
+  }
+  
+  .app-banner-close {
+    background: none; border: none; font-size: 26px; color: #999;
+    cursor: pointer; padding: 0; line-height: 1; outline: none;
+  }
+</style>
 </head>
+
+    
 <body>
 
     <iframe id="myIframe" title="Web Utama" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"></iframe>
-
+    
+<div id="smart-app-banner">
+  <div class="app-banner-left">
+    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjJwRcbCMRVrNsiG08SHA97LU2k48iSHObDJJkcm_KLa6e2Aym40jiph1GLserAZEEzHy_xHtpgLi2RWZVewVj7Jf8CD802PNYJbGSLj5YlpfTWeOpLix-w8KDIsk9M9E3C0-KFoJw0cTRLsDJ6jhLTtN7LdXwgny6voM7mwu8yGmWZN2KBksBwHsAc0dL0=s800" class="app-banner-icon" alt="Logo ATAS INA" />
+    <div class="app-banner-info">
+      <span class="app-banner-title">ATAS INDONESIA</span>
+      <span class="app-banner-desc">Gratis di Google Play</span>
+    </div>
+  </div>
+  <div class="app-banner-right">
+    <a href="https://play.google.com/store/apps/details?id=atas.indonesia" id="btn-install-app" class="app-banner-btn" target="_blank">INSTALL</a>
+    <button id="btn-close-banner" class="app-banner-close">&times;</button>
+  </div>
+</div>
     <script>
         // 1. GANTI INI DENGAN ALAMAT BLOGGER KAMU (TIDAK BOLEH ADA GARIS MIRING DI UJUNGNYA)
         const BLOG_URL = "https://atas-indonesia.blogspot.com"; 
@@ -39,5 +112,37 @@
         });
     </script>
 
+<script>
+  // Menggunakan fungsi eksekusi langsung (IIFE) agar tidak kena block Blogger
+  (function() {
+    var banner = document.getElementById("smart-app-banner");
+    var btnInstall = document.getElementById("btn-install-app");
+    var btnClose = document.getElementById("btn-close-banner");
+
+    // Jika elemen tidak ditemukan (safety bypass), hentikan agar tidak error
+    if (!banner || !btnInstall || !btnClose) return;
+
+    var isAppInstalled = localStorage.getItem("atas_app_promo_v3");
+
+    // Munculkan setelah 1.5 detik
+    if (!isAppInstalled) {
+      setTimeout(function() {
+        banner.classList.add("show-banner");
+      }, 1500);
+    }
+
+    // Aksi Klik Install
+    btnInstall.onclick = function() {
+      localStorage.setItem("atas_app_promo_v3", "true");
+      banner.classList.remove("show-banner");
+    };
+
+    // Aksi Klik Tutup/Silang
+    btnClose.onclick = function() {
+      banner.classList.remove("show-banner");
+      // Tidak disave ke local storage, jadi nanti muncul lagi kalau buka web
+    };
+  })();
+</script>
 </body>
 </html>
