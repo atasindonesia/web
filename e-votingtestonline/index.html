@@ -859,12 +859,27 @@
                     el('login-logo-div').style.display = 'none'; el('live-logo').src = GLOBAL_CONFIG.Logo; 
                 }
             }
-            const sesiLokal = localStorage.getItem('evote_session'); 
-            if (sesiLokal) { 
-                ME = JSON.parse(sesiLokal); 
-                if (ME.role === 'admin') { nav('admin'); refAdmin(); } else { nav('voter'); refVoter(); } 
-            }
-            load(0);
+            
+            // KUNCI UTAMA: Tunggu Firebase Auth selesai mengecek sesi di latar belakang
+            window.onAuthStateChanged(window.auth, (user) => {
+                const sesiLokal = localStorage.getItem('evote_session'); 
+                if (sesiLokal) { 
+                    ME = JSON.parse(sesiLokal); 
+                    if (ME.role === 'admin') { 
+                        // Jika role Admin, pastikan 'user' Auth juga sudah terbaca aktif
+                        if(user) {
+                            nav('admin'); refAdmin(); 
+                        } else {
+                            // Jika terdeteksi admin tapi Firebase belum login, bersihkan sesi
+                            clearSession();
+                        }
+                    } else { 
+                        nav('voter'); refVoter(); 
+                    } 
+                }
+                load(0); // Matikan loading HANYA SETELAH pengecekan selesai
+            });
+            
         } catch(e) { load(0); }
     }
 
@@ -884,7 +899,9 @@
                 if (adminDoc.exists()) {
                     ME = { status: 'success', role: 'admin', token: u, data: adminDoc.data() };
                     localStorage.setItem('evote_session', JSON.stringify(ME));
-                    nav('admin'); refAdmin(); load(0);
+                    nav('admin'); 
+                    await refAdmin(); // <--- TAMBAHKAN AWAIT DI SINI
+                    load(0);
                     Swal.fire('Berhasil', 'Selamat datang, Admin!', 'success');
                     return; 
                 }
