@@ -895,18 +895,22 @@
             const adminEmail = u + "@atasindonesia.or.id"; 
             try {
                 await window.signInWithEmailAndPassword(window.auth, adminEmail, p);
+                
+                // JEDA 500ms: Tunggu Firestore Rules mengenali Auth Token Admin
+                await new Promise(r => setTimeout(r, 500)); 
+                
                 const adminDoc = await window.getDoc(window.doc(window.db, "admins", u));
                 if (adminDoc.exists()) {
                     ME = { status: 'success', role: 'admin', token: u, data: adminDoc.data() };
                     localStorage.setItem('evote_session', JSON.stringify(ME));
-                    nav('admin'); 
-                    await refAdmin(); // <--- TAMBAHKAN AWAIT DI SINI
+                    
                     load(0);
-                    Swal.fire('Berhasil', 'Selamat datang, Admin!', 'success');
-                    return; 
+                    nav('admin'); 
+                    refAdmin(); 
+                    return; // Stop di sini
                 }
             } catch (e) {
-                // Abaikan error auth, berarti bukan admin, lanjut cek sebagai pemilih
+                // Abaikan error auth, berarti bukan admin, lanjut cek DPT
             }
 
             // 2. CEK SEBAGAI PEMILIH VIA FIRESTORE (DPT)
@@ -918,9 +922,11 @@
                 if (data.pass === hashPass || data.pass === p) { 
                     ME = { status: 'success', role: 'voter', token: vDoc.id, data: data, voted: data.voted };
                     localStorage.setItem('evote_session', JSON.stringify(ME));
-                    nav('voter'); refVoter(); load(0);
-                    Swal.fire('Berhasil', 'Selamat datang di Bilik Suara!', 'success');
-                    return; 
+                    
+                    load(0);
+                    nav('voter'); 
+                    refVoter(); 
+                    return; // Stop di sini
                 }
             }
             throw new Error("Username atau Password salah!");
@@ -1415,23 +1421,34 @@ function startLiveCount() {
     window.onscroll = () => { const btn = el('btn-scroll-top'); if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) btn.style.display = "flex"; else btn.style.display = "none"; };
     
     function nav(id) {
-      document.querySelectorAll('.view-section').forEach(x=>x.classList.remove('view-active')); el('v-'+id).classList.add('view-active');
+      // --- PENYAPU OTOMATIS: Hancurkan semua overlay hitam yang nyangkut ---
+      if(typeof Swal !== 'undefined') Swal.close();
+      document.querySelectorAll('.swal2-container, .modal-backdrop').forEach(e => e.remove());
+      document.body.classList.remove('modal-open', 'swal2-shown', 'swal2-height-auto');
+      document.body.style.overflow = 'auto';
+      document.body.style.paddingRight = '0px';
+      if(el('sidebar-overlay')) el('sidebar-overlay').classList.remove('show');
+      // -------------------------------------------------------------------
+
+      // Pindah Halaman
+      document.querySelectorAll('.view-section').forEach(x=>x.classList.remove('view-active')); 
+      el('v-'+id).classList.add('view-active');
       
       // Bersihkan sisa-sisa interval lama saat pindah halaman
       if(window.POLL) { clearInterval(window.POLL); window.POLL = null; }
       window.currentPollRate = null; 
       
       if(id=='live') { 
-    isEnded = false; isStarted = false; window.shownResult = false; 
-    startLiveCount(); // <-- Panggil di sini
-    updateLiveAuthBtn(); 
-    if(window.TIMER_INT) clearInterval(window.TIMER_INT); 
-    window.TIMER_INT = setInterval(updateTimer, 1000); 
-} else {
-    // Matikan pantauan jika keluar dari halaman Live agar hemat kuota
-    if(unsubCandidates) unsubCandidates();
-    if(unsubConfig) unsubConfig();
-}
+          isEnded = false; isStarted = false; window.shownResult = false; 
+          startLiveCount(); 
+          updateLiveAuthBtn(); 
+          if(window.TIMER_INT) clearInterval(window.TIMER_INT); 
+          window.TIMER_INT = setInterval(updateTimer, 1000); 
+      } else {
+          // Matikan pantauan jika keluar dari halaman Live agar hemat kuota
+          if(unsubCandidates) unsubCandidates();
+          if(unsubConfig) unsubConfig();
+      }
     }
 
     function mdlCand(id){ let c = id ? GLOBAL_CANDS.find(x => x.id === id) : null; el('cid').value = c?c.id:''; el('cno').value = c?c.no:''; el('cnm').value = c?c.nama:''; el('cnia').value = c?c.nia||'':''; el('ctpl').value = c?c.tp_lahir||'':''; el('ctgl').value = c?c.tg_lahir||'':''; el('cjk').value = c?c.jk||'L':'L'; el('calm').value = c?c.alamat||'':''; el('cvis').value = c?c.visi||'':''; el('cmis').value = c?c.misi||'':''; el('cfo').value = c?c.foto||'':''; el('cfn').value = ''; if(c&&c.foto){ el('cpr').src=c.foto; el('cpr').style.display='block'; el('cpt').style.display='none'; } else { el('cpr').style.display='none'; el('cpt').style.display='block'; } new bootstrap.Modal('#mCand').show(); }
