@@ -1340,7 +1340,10 @@ function startLiveCount() {
 }
 
     function updateTimer() {
-        if(!START_TIME) return; const now = new Date().getTime(); const tm = el('timer-live'); const tmb = el('timer-live-bottom');
+        if(!START_TIME) return; 
+        const now = new Date().getTime(); 
+        const tm = el('timer-live'); 
+        const tmb = el('timer-live-bottom');
         
         if(now < START_TIME) { 
             el('live-wait').classList.remove('d-none'); el('race-area').classList.add('d-none'); 
@@ -1353,52 +1356,36 @@ function startLiveCount() {
             if(tm) { tm.classList.remove('text-danger'); tm.classList.add('text-success'); }
             if(tmb) { tmb.classList.remove('text-danger'); tmb.classList.add('text-success'); }
             
-            let timeLeft = END_TIME - now; let txt = formatTime(timeLeft);
+            let timeLeft = END_TIME - now; 
+            let txt = formatTime(timeLeft);
             if(tm) tm.innerText = txt; if(tmb) tmb.innerText = txt; 
             
-            // ==============================================================
-            // LOGIKA MASTER YOUTUBE LIVE: AUTO REFRESH DUAL-SPEED
-            // ==============================================================
-            if (timeLeft <= 20000) {
-                // Sisa <= 20 Detik: Masuk Mode Menegangkan! Refresh per 2 Detik (2000ms)
-                if (window.currentPollRate !== 2000) {
-                    window.currentPollRate = 2000;
-                    if(window.POLL) clearInterval(window.POLL);
-                    tick(); // Tarik data langsung saat gigi pindah
-                    window.POLL = setInterval(() => { tick(); }, 2000);
-                }
-            } else {
-                // Waktu Normal (> 20 detik): Refresh Santai per 5 Detik (5000ms)
-                if (window.currentPollRate !== 5000) {
-                    window.currentPollRate = 5000;
-                    if(window.POLL) clearInterval(window.POLL);
-                    tick(); // Tarik data langsung saat gigi pindah
-                    window.POLL = setInterval(() => { tick(); }, 5000);
-                }
-            }
-            // ==============================================================
+            if(!isStarted) { isStarted = true; } 
         } 
         else if (END_TIME && now >= END_TIME) { 
             if(tm) { tm.innerText = "WAKTU HABIS"; tm.classList.add('text-danger'); }
             if(tmb) { tmb.innerText = "WAKTU HABIS"; tmb.classList.add('text-danger'); }
+            
             if(!isEnded) { 
                 isEnded = true; 
-                // Matikan semua tarikan data saat waktu habis
-                if(window.POLL) { clearInterval(window.POLL); window.POLL = null; } 
+                
+                // Munculkan layar Finalisasi
                 el('live-final').style.display = 'flex'; 
-                setTimeout(() => { tick(); }, 500); 
+                
+                // Jeda 2 detik biar ada efek dramatis sinkronisasi data terakhir, 
+                // setelah itu tutup layar hitam dan munculkan piala pemenang!
+                setTimeout(() => { 
+                    el('live-final').style.display = 'none'; 
+                    if (!window.shownResult) { 
+                        showWinnerModal({c: GLOBAL_CANDS || []}); 
+                    } 
+                }, 2000); 
             } 
         } 
         else { 
+            // Jika Admin belum mengeset Waktu Selesai (Pemilihan tanpa batas waktu)
             if(tm) tm.innerText = "BERLANGSUNG"; if(tmb) tmb.innerText = "BERLANGSUNG"; 
-            if(!isStarted) { isStarted=true; tick(); } 
-            
-            // Jaga-jaga kalau Admin lupa set waktu selesai (Otomatis per 5 detik)
-            if (window.currentPollRate !== 5000) {
-                window.currentPollRate = 5000;
-                if(window.POLL) clearInterval(window.POLL);
-                window.POLL = setInterval(() => { tick(); }, 5000);
-            }
+            if(!isStarted) { isStarted = true; } 
         }
     }
 
